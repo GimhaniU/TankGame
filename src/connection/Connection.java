@@ -1,4 +1,4 @@
-package com.company;
+package connection;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -36,11 +36,10 @@ public class Connection {
             client.close();
             out.close();
         } catch (UnknownHostException ex) {
-            // Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Severe: \n "+Connection.class.getName()+"\n"+ex+"\n");
             ex.printStackTrace();
         } catch (IOException ex) {
-            //Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, ex);
+
             System.out.println("Severe: \n "+Connection.class.getName()+"\n"+ex);
             ex.printStackTrace();
         } catch(Exception e){
