@@ -1,3 +1,6 @@
+package Parser;
+
+import Parser.Map;
 import game_objects.Brick;
 import game_objects.Tank;
 
@@ -76,7 +79,7 @@ public class Message_Decorder {
             int id = Integer.parseInt(messages[count].substring(1));
             count++;
             map.setClientID(id);
-            System.out.println("client id :"+ id);
+            System.out.println("client id :" + id);
             brick_coordinates = messages[count];
             count++;
             stone_coordinates = messages[count];
