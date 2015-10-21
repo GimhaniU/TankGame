@@ -3,7 +3,7 @@ package connection;
 import java.util.ArrayList;
 
 /**
- * Created by DinsuG on 10/21/2015.
+ * Created by Nuwantha on 10/21/2015.
  */
 public class MessageReader {
     Connection conn;
