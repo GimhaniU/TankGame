@@ -2,8 +2,7 @@ package Parser;
 
 import Parser.Map;
 import com.sun.org.apache.xpath.internal.SourceTree;
-import game_objects.Brick;
-import game_objects.Tank;
+import game_objects.*;
 
 import java.util.ArrayList;
 
@@ -78,14 +77,12 @@ public class Message_Decorder {
 
 
     private void processInitializationMessage(String message) {
-        message = message.substring(0, message.length() - 1);
+        message = message.substring(1, message.length() - 1);
         String[] messages = message.split(":");
         String brick_coordinates, stone_coordinates, water_coordinates;
 
         int count = 1;
 
-        if (true)
-        {
 
             int id = Integer.parseInt(messages[count].substring(1)); //get player number from string
             count++;
@@ -98,26 +95,62 @@ public class Message_Decorder {
             water_coordinates = messages[count];
             count++;
             placeBricks(brick_coordinates);
-            //placeStone(stoneCoords);
-            //placeWater(waterCoords);
+            placeStone(stone_coordinates);
+            placeWater(water_coordinates);
             //map.Joined = true;
             //joinCheck = true;
-        }
 
     }
+
+
+    private void placeCoinPile(String message)
+    {
+        if (message.endsWith("#"))
+        {
+            message = message.substring(0, message.length() - 1);
+        }
+        String[] messages = message.split(":");
+        Coin_Pile coinPile=new Coin_Pile();
+
+        coinPile.setX(Integer.parseInt(String.valueOf(messages[1].charAt(0))));//get x coordinates of points
+        coinPile.setY(Integer.parseInt(String.valueOf(messages[1].charAt(1))));//get y coordinates of points
+        coinPile.setLifeTime(Integer.parseInt(messages[2]));
+        coinPile.setValue(Integer.parseInt(messages[3]));
+
+        ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
+        coinPiles.add(coinPile);
+        map.setCoinPiles(coinPiles);
+
+    }
+
+
+
+    private void placeLifePack(String message)
+    {
+        if (message.endsWith("#"))
+        {
+            message = message.substring(0, message.length() - 1);
+        }
+        String[] messages = message.split(":");
+        Life_Pack lifeFack=new Life_Pack();
+
+        lifeFack.setX(Integer.parseInt(String.valueOf(messages[1].charAt(0))));//get x coordinates of points
+        lifeFack.setY(Integer.parseInt(String.valueOf(messages[1].charAt(1))));//get y coordinates of points
+        lifeFack.setLifeTime(Integer.parseInt(messages[2]));
+
+        ArrayList<Life_Pack> lifeFacks = map.getLifePacks();
+        lifeFacks.add(lifeFack);
+        map.setLifePacks(lifeFacks);
+
+    }
+
+
 
 
     private void processGameUpdateMessage(String message) {
 
     }
 
-    private void placeLifePack(String message) {
-
-    }
-
-    private void placeCoinPile(String message) {
-
-    }
 
     private void placeBricks(String message){
         String[] coordinates = message.split(";");
@@ -135,6 +168,38 @@ public class Message_Decorder {
 
 
     }
+    
+    private void placeStone(String message){
+        String[] coordinates = message.split(";");
+        ArrayList<Stone> stones = new ArrayList<>();
+
+        for (int i = 0; i <coordinates.length ; i++) {
+            Stone stone = new Stone();
+            System.out.println("x : " + coordinates[i].charAt(0) + ", y : " + coordinates[i].charAt(2));
+            stone.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
+            stone.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
+
+            stones.add(stone);
+        }
+        map.setStones(stones);
+    }
+
+
+    private void placeWater(String message){
+        String[] coordinates = message.split(";");
+        ArrayList<Water> waters = new ArrayList<>();
+
+        for (int i = 0; i <coordinates.length ; i++) {
+            Water water = new Water();
+            System.out.println("x : " + coordinates[i].charAt(0) + ", y : " + coordinates[i].charAt(2));
+            water.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
+            water.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
+
+            waters.add(water);
+        }
+        map.setWaters(waters);
+    }
+
 
 
 }
