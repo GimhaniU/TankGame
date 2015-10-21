@@ -1,6 +1,8 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 
 /**
  * Created by Nuwantha on 10/21/2015.
@@ -12,7 +14,7 @@ public class TankGame {
     private JLabel label03;
     private JLabel label04;
     private JLabel label05;
-    private JPanel panel;
+    private JPanel labelPanel;
     private JLabel label06;
     private JLabel label07;
     private JLabel label08;
@@ -107,8 +109,31 @@ public class TankGame {
     private JLabel label97;
     private JLabel label98;
     private JLabel label99;
+    private JLabel[][] labelarray;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+    public TankGame() {
+        labelPanel.setLayout(new GridLayout(10, 10));
+        labelarray = new JLabel[10][10];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                JLabel childLabel = new JLabel("");
+                childLabel.setOpaque(true);
+                childLabel.setBorder(new LineBorder(Color.black));
+                if (i == 0 || j == 0) {
+                    childLabel.setBackground(Color.GREEN);
+
+                } else {
+
+                    childLabel.setBackground(Color.yellow);
+                }
+                labelPanel.add(childLabel);
+                labelarray[i][j] = childLabel;
+
+            }
+        }
     }
 }

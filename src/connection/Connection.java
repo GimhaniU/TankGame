@@ -29,12 +29,13 @@ public class Connection {
 
     //to send messages to server
     public void sendMessage(String message){
+        Socket client=null;
+        DataOutputStream out=null;
         try {
-            Socket client = new Socket("127.0.0.1", 6000);
-            DataOutputStream out = new DataOutputStream(client.getOutputStream());
+            client = new Socket("127.0.0.1", 6000);
+            out = new DataOutputStream(client.getOutputStream());
             out.writeBytes(message);
-            client.close();
-            out.close();
+
         } catch (UnknownHostException ex) {
             System.out.println("Severe: \n "+Connection.class.getName()+"\n"+ex+"\n");
             ex.printStackTrace();
@@ -44,11 +45,19 @@ public class Connection {
             ex.printStackTrace();
         } catch(Exception e){
             System.out.println("Runtime Exceptions:"+e);
+        }finally{
+            try {
+                client.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
 
     }
-    //to hasintha.The Socket will be left unclosed on some exceptions.So moved close blocks to finally block.
+    //The Socket will be left unclosed on some exceptions.So moved close blocks to finally block.
     public String getUpdates(){//this method blocks untill msg receives.Use time outs.
         String update;
         ServerSocket serverReader=null ;
