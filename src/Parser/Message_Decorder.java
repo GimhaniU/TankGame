@@ -1,6 +1,7 @@
 package Parser;
 
 import Parser.Map;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import game_objects.Brick;
 import game_objects.Tank;
 
@@ -18,12 +19,21 @@ public class Message_Decorder {
 
     }
 
-    public void process(String message) {
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public Map process(String message) {
         if (message.length() > 1) {
             char firstChar= message.charAt(0);
+            System.out.println(firstChar);
             switch (firstChar) {
                 case 'S':
-                    processStartMessage(message);
+                   // processStartMessage(message);
                     break;
                 case 'I':
                     processInitializationMessage(message);
@@ -39,12 +49,13 @@ public class Message_Decorder {
                     break;
             }
         }
+        return  map;
     }
 
     private void processStartMessage(String message) {
         if (message.endsWith("#"))
         {
-            message = message.substring(0, message.length() - 1);
+            message = message.substring(1, message.length() - 1);
         }
         if (message.startsWith("S"))
         {
@@ -71,12 +82,12 @@ public class Message_Decorder {
         String[] messages = message.split(":");
         String brick_coordinates, stone_coordinates, water_coordinates;
 
-        int count = 0;
+        int count = 1;
 
-        if (message.substring(0, 1).equals("I"))
+        if (true)
         {
 
-            int id = Integer.parseInt(messages[count].substring(1));
+            int id = Integer.parseInt(messages[count].substring(1)); //get player number from string
             count++;
             map.setClientID(id);
             System.out.println("client id :" + id);
@@ -111,12 +122,12 @@ public class Message_Decorder {
     private void placeBricks(String message){
         String[] coordinates = message.split(";");
         ArrayList<Brick> bricks = new ArrayList<>();
+        System.out.println("Bricks co-ordinates\n---------------------------------------");
         for (int i = 0; i <coordinates.length ; i++) {
             Brick brick = new Brick();
-            System.out.println(coordinates[i].charAt(0));
-            System.out.println(coordinates[i].charAt(2));
-            brick.setX(coordinates[i].charAt(0));
-            brick.setY(coordinates[i].charAt(2));
+            System.out.println("x : "+coordinates[i].charAt(0)+", y : "+coordinates[i].charAt(2));
+            brick.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
+            brick.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
             brick.setHealth(100);
             bricks.add(brick);
         }
