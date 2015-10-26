@@ -25,18 +25,27 @@ public class MessageReader {
     public void listen(){
         Map map=new Map();
         int i=0;
-        while(i<2){
-            String server_message=conn.getUpdates();
-            if(server_message!=null) {
-                System.out.println(server_message + "\n");
-                //process message
-                Message_Decorder decode = new Message_Decorder(map);
-                Map map2=decode.process(server_message);
-                if(grid!=null){
-                    grid.updateGrid(map2);
+        while(true){
+            Thread thread= new Thread() {
+
+                @Override
+                public void run() {
+                    String server_message = conn.getUpdates();
+                    if (server_message != null) {
+                        System.out.println(server_message + "\n");
+                        //process message
+                        Message_Decorder decode = new Message_Decorder(map);
+                        Map map2 = decode.process(server_message);
+                        if (grid != null) {
+                            grid.updateGrid(map2);
+                        }
+                        messagelist.add(server_message);
+                    }
                 }
-                messagelist.add(server_message);
-            }
+            } ;
+            thread.start();
+
+
             i++;
         }
     }
