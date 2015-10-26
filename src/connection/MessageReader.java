@@ -22,11 +22,13 @@ public class MessageReader {
         conn.sendMessage("JOIN#");
        // System.out.println(conn.getUpdates());
     }
-    public void listen(){
-        Map map=new Map();
-        int i=0;
 
-        while(true){
+
+    public Map listen(Map map){
+
+        Map tem_map=null;
+        int i=0;
+        while(i<1){
 
             String server_message = conn.getUpdates();
             if (server_message != null) {
@@ -34,6 +36,7 @@ public class MessageReader {
                 //process message
                 Message_Decorder decode = new Message_Decorder(map);
                 Map map2 = decode.process(server_message);
+                tem_map=map2;
                 if (grid != null) {
                     grid.updateGrid(map2);
                 }
@@ -63,5 +66,6 @@ public class MessageReader {
             **/
             i++;
         }
+        return tem_map;
     }
 }

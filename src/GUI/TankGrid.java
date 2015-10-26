@@ -1,9 +1,7 @@
 package GUI;
 
 import Parser.Map;
-import game_objects.Brick;
-import game_objects.Entity;
-import game_objects.Entity_Type;
+import game_objects.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -35,17 +33,52 @@ public class TankGrid extends JFrame{
 
             }
         }
-        setSize(600, 600);
+        setSize(1200,600);
         setContentPane(labelPanel);
         setVisible(true);
 
     }
     public void updateGrid(Map map){
+        for(JLabel[] subarray:labelarray) {
+            for(JLabel label:subarray) {
+                label.setIcon(null);
+                label.setText("");
+            }
+        }
+
+        //add bricks
         ArrayList<Brick> bricks = map.getBricks();
         for(Brick brick:bricks){
             draw(brick);
         }
+        //add water
+        ArrayList<Water> waters = map.getWaters();
+        for(Water water:waters){
+            draw(water);
+        }
+        //add stone walls
+        ArrayList<Stone> stones = map.getStones();
+        for(Stone stone:stones){
+            draw(stone);
+        }
+
+        ArrayList<Tank> tanks = map.getTanks();
+        for(Tank tank:tanks){
+            draw(tank);
+        }
+
+        ArrayList<Coin_Pile> coin_piles = map.getCoinPiles();
+        for(Coin_Pile coin_pile:coin_piles){
+            draw(coin_pile);
+        }
+
+        ArrayList<Life_Pack> life_packs = map.getLifePacks();
+        for(Life_Pack life_pack:life_packs){
+            draw(life_pack);
+        }
+
     }
+
 
     private void draw(Entity entity) {
         System.out.println(entity.getY()+" "+entity.getX());
@@ -56,10 +89,24 @@ public class TankGrid extends JFrame{
             childLabel.setIcon(new ImageIcon("src/images/stone.jpg"));//stone
         }else if(entity.getEnType()== Entity_Type.Brick) {
             childLabel.setIcon(new ImageIcon("src/images/brick.jpg")); //brick
+            childLabel.setText(((Brick)entity).getHealth()+"%");
         }else if(entity.getEnType()== Entity_Type.CoinPile) {
             childLabel.setIcon(new ImageIcon("src/images/coinpile.png"));
         }else if(entity.getEnType()== Entity_Type.Lifepack){
             childLabel.setIcon(new ImageIcon("src/images/lifepack.png"));
+        } else if(entity.getEnType()== Entity_Type.Tank /* && entity.getId()==myone*/){
+            Tank tank=(Tank)entity;
+            //setting directed tank
+            if(((Tank)entity).getDirection()==1) {
+                childLabel.setIcon(new ImageIcon("src/images/mytank-1.png"));
+            }else if(((Tank)entity).getDirection()==2) {
+                childLabel.setIcon(new ImageIcon("src/images/mytank-2.png"));
+            }else if(((Tank)entity).getDirection()==3) {
+                childLabel.setIcon(new ImageIcon("src/images/mytank-3.png"));
+            }else {
+                childLabel.setIcon(new ImageIcon("src/images/mytank-0.png"));
+            }
+            childLabel.setText("h : " + ((Tank) entity).getHealth() + " p :" + ((Tank) entity).getCoins());
         } else {
 
             childLabel.setBackground(Color.lightGray);

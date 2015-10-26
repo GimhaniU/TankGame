@@ -3,7 +3,7 @@ package game_objects;
 /**
  * Created by Gimhani on 10/21/2015.
  */
-public class Tank extends Entity {
+public class Tank extends Health_Entity {
 
     public boolean shot;
     public int coins;
