@@ -18,7 +18,7 @@ public class PoolThread extends Thread {
         while(!isStopped()){
             try{
                 Runnable runnable;
-                runnable = (Runnable) taskQueue.dequeue();
+                runnable = (Runnable) taskQueue.remove();
                 runnable.run();
             } catch(Exception e){
                 //log or otherwise report exception,

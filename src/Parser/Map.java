@@ -98,4 +98,35 @@ public class Map {
         this.clientID = clientID;
     }
 
+
+    public void Update() {
+
+        long current_time = System.currentTimeMillis() / 1000;
+
+        ArrayList<Coin_Pile> tem_coin_piles = new ArrayList<>();
+        for (int i=0;i<coinPiles.size();i++){
+            Coin_Pile coin_pile = coinPiles.get(i);
+            if(current_time-coin_pile.getStartTime()<coin_pile.getLifeTime()){
+                tem_coin_piles.add(coin_pile);
+            }
+
+        }
+        coinPiles=tem_coin_piles;
+
+
+        ArrayList<Life_Pack> tem_life_pack = new ArrayList<>();
+        for (int i=0;i<lifePacks.size();i++){
+            Life_Pack life_pack = lifePacks.get(i);
+            if(current_time-life_pack.getStartTime()<life_pack.getLifeTime()){
+                tem_life_pack.add(life_pack);
+            }
+
+        }
+        lifePacks=tem_life_pack;
+
+
+    }
+
+
+
 }

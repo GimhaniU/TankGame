@@ -44,7 +44,7 @@ public class Message_Decorder {
                     placeLifePack(message);
                     break;
                 case 'G':
-                    processGameUpdateMessage(message);
+                    //processGameUpdateMessage(message);
                     break;
             }
         }
@@ -105,6 +105,7 @@ public class Message_Decorder {
 
     private void placeCoinPile(String message)
     {
+
         if (message.endsWith("#"))
         {
             message = message.substring(0, message.length() - 1);
@@ -113,9 +114,12 @@ public class Message_Decorder {
         Coin_Pile coinPile=new Coin_Pile();
 
         coinPile.setX(Integer.parseInt(String.valueOf(messages[1].charAt(0))));//get x coordinates of points
-        coinPile.setY(Integer.parseInt(String.valueOf(messages[1].charAt(1))));//get y coordinates of points
+        coinPile.setY(Integer.parseInt(String.valueOf(messages[1].charAt(2))));//get y coordinates of points
+
+
         coinPile.setLifeTime(Integer.parseInt(messages[2]));
         coinPile.setValue(Integer.parseInt(messages[3]));
+        coinPile.setStartTime(System.currentTimeMillis());
 
         ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
         coinPiles.add(coinPile);
@@ -137,6 +141,7 @@ public class Message_Decorder {
         lifeFack.setX(Integer.parseInt(String.valueOf(messages[1].charAt(0))));//get x coordinates of points
         lifeFack.setY(Integer.parseInt(String.valueOf(messages[1].charAt(1))));//get y coordinates of points
         lifeFack.setLifeTime(Integer.parseInt(messages[2]));
+        lifeFack.setStartTime(System.currentTimeMillis());
 
         ArrayList<Life_Pack> lifeFacks = map.getLifePacks();
         lifeFacks.add(lifeFack);
@@ -147,9 +152,22 @@ public class Message_Decorder {
 
 
 
-    private void processGameUpdateMessage(String message) {
-
-    }
+   // private void processGameUpdateMessage(String message) {
+      //  string[] messages = message.split(":");
+      //  string[] playerMessages = new string[Map.NO_OF_PLAYERS];
+        int count = 0;
+      //  if (!message.StartsWith("G") || messages.Length < 2)
+       // {
+        //    return;
+       // }
+       // while (messages[count + 1].StartsWith("P"))
+       // {
+         //   playerMessages[count] = messages[++count];
+       // }
+       // placeTank(playerMessages);
+       // string brickMessage = messages[++count];
+       // placeBricks(brickMessage);
+   // }
 
 
     private void placeBricks(String message){
