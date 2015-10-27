@@ -28,27 +28,54 @@ public class Message_Decorder {
 
     public Map process(String message) {
         if (message.length() > 1) {
+            char secondChar = message.charAt(1);
             char firstChar = message.charAt(0);
             System.out.println(firstChar);
-            switch (firstChar) {
-                case 'S':
-                    processStartMessage(message);
-                    break;
-                case 'I':
-                    processInitializationMessage(message);
-                    break;
-                case 'C':
-                    placeCoinPile(message);
-                    break;
-                case 'L':
-                    placeLifePack(message);
-                    break;
-                case 'G':
-                    processGameUpdateMessage(message);
-                    break;
+            if(secondChar==':') {   //as many replies will be started with same letter
+                switch (firstChar) {
+                    case 'S':
+                        processStartMessage(message);
+                        break;
+                    case 'I':
+                        processInitializationMessage(message);
+                        break;
+                    case 'C':
+                        placeCoinPile(message);
+                        break;
+                    case 'L':
+                        placeLifePack(message);
+                        break;
+                    case 'G':
+                        processGameUpdateMessage(message);
+                        break;
+                }
+            }else{
+                processReplyMessage(message);
             }
         }
         return map;
+    }
+
+    private String processReplyMessage(String message) {
+        if(message=="OBSTACLE#"){
+            return "can't move ahead";
+        }else if(message=="DEAD#"){
+            //my tank stopped
+            return "can't move ahead";
+        }else if(message=="INVALID_CELL#"){
+            return "nowhere to go";
+        }else if(message=="GAME_NOT_STARTED_YET#"){
+            return "Wait wait wait";
+        }else if(message=="CELL_OCCUPIED#"){
+            return "cell is occupied";
+        }else if(message=="TOO_QUICK#"){
+            return "Be slow";
+        }else if(message=="GAME_HAS_FINISHED#"){
+            return "Game Over";
+        }else if(message=="NOT_A_VALID_CONTESTANT#"){
+            return "You are not in game";
+        }
+        return message;     //if nothing of above
     }
 
     private void processStartMessage(String message) {
