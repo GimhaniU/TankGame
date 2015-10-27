@@ -211,8 +211,10 @@ public class WarGui extends JFrame {
             childLabel.setText(((Brick) entity).getHealth() + "%");
         } else if (entity.getEnType() == Entity_Type.CoinPile) {
             childLabel.setIcon(new ImageIcon("src/images/coinpile.png"));
+            childLabel.setText("$:"+((Coin_Pile) entity).getValue());
         } else if (entity.getEnType() == Entity_Type.Lifepack) {
             childLabel.setIcon(new ImageIcon("src/images/lifepack.png"));
+            childLabel.setText(":" + ((Life_Pack) entity).getValue());
         } else if (entity.getEnType() == Entity_Type.Tank /* && entity.getId()==myone*/) {
             Tank tank = (Tank) entity;
             //setting directed tank

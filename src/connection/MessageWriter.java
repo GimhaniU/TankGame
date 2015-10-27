@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Created by Gimhani on 10/26/2015.
  */
 public class MessageWriter extends Thread {
-    ArrayList<String> message_list;
+    ArrayList<String> message_list=new ArrayList<>();
     String message;
     Connection conn;
 
