@@ -69,6 +69,12 @@ public class WarGui extends JFrame {
 
     }
 
+    public JTextArea getTextArea(){
+        return this.textArea1;
+
+    }
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Gimhani Uthpala
@@ -217,7 +223,7 @@ public class WarGui extends JFrame {
             childLabel.setText(((Brick) entity).getHealth() + "%");
         } else if (entity.getEnType() == Entity_Type.CoinPile) {
             childLabel.setIcon(new ImageIcon("src/images/coinpile.png"));
-            childLabel.setText("$:"+((Coin_Pile) entity).getValue());
+            childLabel.setText("$:" + ((Coin_Pile) entity).getValue());
         } else if (entity.getEnType() == Entity_Type.Lifepack) {
             childLabel.setIcon(new ImageIcon("src/images/lifepack.png"));
             childLabel.setText(":" + ((Life_Pack) entity).getValue());

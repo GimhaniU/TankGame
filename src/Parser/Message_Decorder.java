@@ -1,9 +1,11 @@
 package Parser;
 
+import GUI.WarGui;
 import Parser.Map;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import game_objects.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -12,11 +14,19 @@ import java.util.ArrayList;
 public class Message_Decorder {
 
     private Map map = null;
+    private WarGui grid;
 
     public Message_Decorder(Map map) {
         this.map = map;
 
     }
+
+    public Message_Decorder(Map map, WarGui grid) {
+        this.map = map;
+        this.grid=grid;
+
+    }
+
 
     public Map getMap() {
         return map;
@@ -52,7 +62,10 @@ public class Message_Decorder {
                     }
                     break;
                 default:
-                    processReplyMessage(message);
+                    String replyMessage = processReplyMessage(message);
+                    if(grid!=null) {
+                        grid.getTextArea().setText(replyMessage);
+                    }
             }
         }
         return map;

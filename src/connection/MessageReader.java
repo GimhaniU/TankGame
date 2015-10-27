@@ -28,7 +28,7 @@ public class MessageReader extends Thread {
 
     public void listen(){
 
-        Message_Decorder decode = new Message_Decorder(map);
+        Message_Decorder decode = new Message_Decorder(map,grid);
 
         //Map tem_map=null;
         //int i=0;
@@ -37,7 +37,12 @@ public class MessageReader extends Thread {
             String server_message = conn.getUpdates();
             if (server_message != null) {
                 System.out.println(server_message + "\n");
-                decode = new Message_Decorder(map);
+                map.Update();
+                if (grid != null) {
+                    grid.updateGrid(map);
+                }
+
+                decode = new Message_Decorder(map,grid);
                 map = decode.process(server_message);
                 map.Update();
                 if (grid != null) {
