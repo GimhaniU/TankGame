@@ -13,18 +13,19 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 0
 				"y": 0
-				"width": 690
+				"width": 1150
 				"height": 65
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 				"autoSize": false
 			} ) {
 				name: "labelPanel"
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "labelPanelKeyReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 5
+				"x": 0
 				"y": 70
-				"height": 415
-				"width": 505
+				"height": 570
+				"width": 980
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 				"autoSize": false
@@ -53,14 +54,14 @@ new FormModel {
 					"height": 180
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 520
-				"y": 70
-				"height": 420
+				"x": 985
+				"y": 80
+				"height": 560
 				"width": 165
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 705, 535 )
+			"size": new java.awt.Dimension( 1165, 680 )
 		} )
 	}
 }

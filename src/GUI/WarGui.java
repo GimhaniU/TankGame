@@ -4,9 +4,12 @@
 
 package GUI;
 
+import java.awt.event.*;
 import Parser.Map;
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
+import connection.MessageWriter;
 import game_objects.*;
+import sun.plugin2.message.Message;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,9 +20,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author Nuwantha
  */
-public class WarGui extends JFrame  {
-
-
+public class WarGui extends JFrame {
     public WarGui() {
         initComponents();
 
@@ -38,22 +39,28 @@ public class WarGui extends JFrame  {
 
             }
         }
-
+        labelPanel.requestFocus();
         //setting up score board architecture
         DefaultTableModel tableModel= (DefaultTableModel) table1.getModel();
-        tableModel.setRowCount(5);
         tableModel.setColumnCount(0);
+        tableModel.setRowCount(5);
         tableModel.addColumn("Player");
         tableModel.addColumn("Coins");
         tableModel.addColumn("Points");
         tableModel.addColumn("Health");
         tableModel.setValueAt("P0", 0, 0);
-        tableModel.setValueAt("P1",1,0);
-        tableModel.setValueAt("P2",2,0);
-        tableModel.setValueAt("P3",3,0);
-        tableModel.setValueAt("P4",4,0);
+        tableModel.setValueAt("P1", 1, 0);
+        tableModel.setValueAt("P2", 2, 0);
+        tableModel.setValueAt("P3", 3, 0);
+        tableModel.setValueAt("P4", 4, 0);
 
         setVisible(true);
+    }
+
+    private void labelPanelKeyReleased(KeyEvent e) {
+        MessageWriter writer=new MessageWriter();
+        writer.write(e);
+
     }
 
     private void initComponents() {
@@ -76,10 +83,16 @@ public class WarGui extends JFrame  {
         title_label.setHorizontalAlignment(SwingConstants.CENTER);
         title_label.setFont(new Font("Showcard Gothic", Font.BOLD, 28));
         contentPane.add(title_label);
-        title_label.setBounds(0, 0, 690, 65);
+        title_label.setBounds(0, 0, 1150, 65);
 
         //======== labelPanel ========
         {
+            labelPanel.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    labelPanelKeyReleased(e);
+                }
+            });
 
             // JFormDesigner evaluation mark
             labelPanel.setBorder(new javax.swing.border.CompoundBorder(
@@ -91,7 +104,7 @@ public class WarGui extends JFrame  {
             labelPanel.setLayout(null);
         }
         contentPane.add(labelPanel);
-        labelPanel.setBounds(5, 70, 505, 415);
+        labelPanel.setBounds(0, 70, 980, 570);
 
         //======== panel2 ========
         {
@@ -112,7 +125,7 @@ public class WarGui extends JFrame  {
             scrollPane2.setBounds(10, 115, 145, 180);
         }
         contentPane.add(panel2);
-        panel2.setBounds(520, 70, 165, 420);
+        panel2.setBounds(985, 80, 165, 560);
 
         { // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -187,7 +200,7 @@ public class WarGui extends JFrame  {
 
 
     private void draw(Entity entity) {
-        //System.out.println(entity.getY() + " " + entity.getX());
+        System.out.println(entity.getY() + " " + entity.getX());
         JLabel childLabel = labelarray[entity.getY()][entity.getX()];
         if (entity.getEnType() == Entity_Type.Water) {
             childLabel.setIcon(new ImageIcon("src/images/water.jpg"));//water
@@ -213,10 +226,21 @@ public class WarGui extends JFrame  {
                 childLabel.setIcon(new ImageIcon("src/images/mytank-0.png"));
             }
             childLabel.setText("h : " + ((Tank) entity).getHealth() + " p :" + ((Tank) entity).getCoins());
+            addDataToTable(tank);
         } else {
 
             childLabel.setBackground(Color.lightGray);
         }
     }
 
+    private void addDataToTable(Tank tank) {
+        int row=tank.getId();
+        DefaultTableModel tableModel = (DefaultTableModel) table1.getModel();
+        Object[] valueArray=new Object[]{"P"+tank.getId(),tank.getPoints(),tank.getCoins(),tank.getHealth()};
+        int column = 0;
+        for (Object cellValue: valueArray) {
+            tableModel.setValueAt(cellValue, row, column);
+            column++;
+        }
+    }
 }
