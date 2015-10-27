@@ -81,7 +81,7 @@ public class TankGrid extends JFrame{
 
 
     private void draw(Entity entity) {
-        System.out.println(entity.getY()+" "+entity.getX());
+        //System.out.println(entity.getY()+" "+entity.getX());
         JLabel childLabel=labelarray[entity.getY()][entity.getX()];
         if (entity.getEnType()== Entity_Type.Water) {
             childLabel.setIcon(new ImageIcon("src/images/water.jpg"));//water

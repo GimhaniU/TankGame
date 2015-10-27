@@ -103,10 +103,11 @@ public class Map {
 
         long current_time = System.currentTimeMillis();
 
+
         ArrayList<Coin_Pile> tem_coin_piles = new ArrayList<>();
         for (int i=0;i<coinPiles.size();i++){
             Coin_Pile coin_pile = coinPiles.get(i);
-            System.out.println("starttime :"+coin_pile.getStartTime() );
+            //System.out.println("starttime :"+coin_pile.getStartTime() );
             if((current_time-coin_pile.getStartTime())<coin_pile.getLifeTime()){
 
                 tem_coin_piles.add(coin_pile);
@@ -114,6 +115,7 @@ public class Map {
             }
 
         }
+
         coinPiles=tem_coin_piles;
 
         ArrayList<Life_Pack> tem_life_pack = new ArrayList<>();
@@ -130,4 +132,3 @@ public class Map {
     }
 
 }
-

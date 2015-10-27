@@ -29,7 +29,7 @@ public class Message_Decorder {
     public Map process(String message) {
         if (message.length() > 1) {
             char firstChar = message.charAt(0);
-            System.out.println(firstChar);
+            //System.out.println(firstChar);
             switch (firstChar) {
                 case 'S':
                     processStartMessage(message);
@@ -86,7 +86,7 @@ public class Message_Decorder {
         int id = Integer.parseInt(messages[count].substring(1)); //get player number from string
         count++;
         map.setClientID(id);
-        System.out.println("client id :" + id);
+       // System.out.println("client id :" + id);
         brick_coordinates = messages[count];
         count++;
         stone_coordinates = messages[count];
@@ -163,19 +163,20 @@ public class Message_Decorder {
     private void placeBricks(String message) {
         String[] coordinates = message.split(";");
         ArrayList<Brick> bricks = new ArrayList<>();
-        System.out.println("Bricks co-ordinates\n---------------------------------------");
+        //System.out.println("Bricks co-ordinates\n---------------------------------------");
         for (int i = 0; i < coordinates.length; i++) {
             Brick brick = new Brick();
-            System.out.println("x : " + coordinates[i].charAt(0) + ", y : " + coordinates[i].charAt(2));
+          //  System.out.println("x : " + coordinates[i].charAt(0) + ", y : " + coordinates[i].charAt(2));
             brick.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
             brick.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
+            int health=0;
             if (coordinates[i].length() > 4) {
-                System.out.println("dasdsdasda :      " +coordinates[i]);
-                brick.setHealth(Integer.parseInt(coordinates[i].substring(4)));
-            } else {
-                brick.setHealth(100);
+               health= Integer.parseInt(coordinates[i].substring(4));
             }
-            bricks.add(brick);
+            brick.setHealth(health);
+            if(health!=4) {
+                bricks.add(brick);
+            }
         }
         map.setBricks(bricks);
 
@@ -246,6 +247,30 @@ public class Message_Decorder {
             tank.setDirection(direction);
             tank.setShot(is_shot);
             tanks.add(tank);
+
+
+            //removing coin piles or life pack when tank get that coin or life pack
+            ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
+            ArrayList<Coin_Pile> tem_coinPiles=new ArrayList();
+            for(Coin_Pile coin_pile:coinPiles){
+                if(!(coin_pile.getX()==x && coin_pile.getY()==y))
+                {
+                    tem_coinPiles.add(coin_pile);
+                }
+
+            }
+            map.setCoinPiles(tem_coinPiles);
+
+            ArrayList<Life_Pack> life_packs = map.getLifePacks();
+            ArrayList<Life_Pack> tem_life_packs=new ArrayList();
+            for(Life_Pack life_pack:life_packs){
+                if(!(life_pack.getX()==x && life_pack.getY()==y))
+                {
+                    tem_life_packs.add(life_pack);
+                }
+
+            }
+            map.setLifePacks(tem_life_packs);
 
         }
         map.setTanks(tanks);

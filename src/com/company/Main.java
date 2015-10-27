@@ -1,5 +1,4 @@
 package com.company;
-
 import GUI.TankGrid;
 import Parser.Map;
 import connection.Connection;
