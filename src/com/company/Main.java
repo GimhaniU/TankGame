@@ -11,17 +11,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        MessageWriter messageWriter = new MessageWriter();
-        messageWriter.start();
+       // Map map=new Map();
 
-        Map map=new Map();
         WarGui tankGrid=new WarGui();
         tankGrid.setVisible(true);
 
-        MessageReader messageReader = new MessageReader(tankGrid);
 
-        MapUpdater mapUpdater = new MapUpdater(map);
-        mapUpdater.start();
+        MessageWriter messageWriter = new MessageWriter(tankGrid);
+        messageWriter.start();
+
+
+        MessageReader messageReader = new MessageReader(tankGrid);
+        messageReader.start();
+
+
+       //MapUpdater mapUpdater = new MapUpdater(map);
+        //mapUpdater.start();
 
         /*Thread t=new Thread(tankGrid);
         try {
@@ -29,12 +34,12 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        t.start();*/
+        t.start();*//*
         while(true) {
             map = messageReader.listen(map);
-            //mapUpdater.setMap(map);
+           // mapUpdater.setMap(map);
             map.Update();
             tankGrid.updateGrid(map);
-        }
+        }*/
     }
 }
