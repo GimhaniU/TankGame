@@ -1,6 +1,7 @@
 package connection;
 
 import GUI.TankGrid;
+import GUI.WarGui;
 import Parser.Map;
 import Parser.Message_Decorder;
 
@@ -10,11 +11,11 @@ import java.util.ArrayList;
  * Created by Nuwantha on 10/21/2015.
  */
 public class MessageReader {
-    TankGrid grid;
+    WarGui grid;
     Connection conn;
     ArrayList<String> messagelist;
 
-    public MessageReader(TankGrid grid) {
+    public MessageReader(WarGui grid) {
 
         conn = Connection.getInstance();
         messagelist=new ArrayList<>();
