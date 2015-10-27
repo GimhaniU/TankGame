@@ -59,7 +59,6 @@ public class WarGui extends JFrame {
         // Generated using JFormDesigner Evaluation license - Gimhani Uthpala
         title_label = new JLabel();
         labelPanel = new JPanel();
-        scrollPane3 = new JScrollPane();
         panel2 = new JPanel();
         scrollPane1 = new JScrollPane();
         textArea1 = new JTextArea();
@@ -88,8 +87,6 @@ public class WarGui extends JFrame {
                     java.awt.Color.red), labelPanel.getBorder())); labelPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
 
             labelPanel.setLayout(null);
-            labelPanel.add(scrollPane3);
-            scrollPane3.setBounds(new Rectangle(new Point(5, 25), scrollPane3.getPreferredSize()));
         }
         contentPane.add(labelPanel);
         labelPanel.setBounds(5, 70, 505, 415);
@@ -137,7 +134,6 @@ public class WarGui extends JFrame {
     // Generated using JFormDesigner Evaluation license - Gimhani Uthpala
     private JLabel title_label;
     private JPanel labelPanel;
-    private JScrollPane scrollPane3;
     private JPanel panel2;
     private JScrollPane scrollPane1;
     private JTextArea textArea1;
@@ -219,7 +215,5 @@ public class WarGui extends JFrame {
 
             childLabel.setBackground(Color.lightGray);
         }
-
     }
-
 }
