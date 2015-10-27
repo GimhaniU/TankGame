@@ -57,9 +57,15 @@ public class WarGui extends JFrame {
         setVisible(true);
     }
 
+
     private void labelPanelKeyReleased(KeyEvent e) {
-        MessageWriter writer=new MessageWriter();
-        writer.write(e);
+     //   MessageWriter writer=new MessageWriter();
+      //  writer.write(e);
+
+    }
+
+    public JPanel getlabelPanel(){
+        return this.labelPanel;
 
     }
 
@@ -200,7 +206,7 @@ public class WarGui extends JFrame {
 
 
     private void draw(Entity entity) {
-        System.out.println(entity.getY() + " " + entity.getX());
+        //System.out.println(entity.getY() + " " + entity.getX());
         JLabel childLabel = labelarray[entity.getY()][entity.getX()];
         if (entity.getEnType() == Entity_Type.Water) {
             childLabel.setIcon(new ImageIcon("src/images/water.jpg"));//water

@@ -1,6 +1,9 @@
 package connection;
 
+import GUI.WarGui;
+
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,7 +12,13 @@ import java.util.Scanner;
  * Created by Gimhani on 10/26/2015.
  */
 public class MessageWriter extends Thread {
-    ArrayList<String> message_list=new ArrayList<>();
+    private  WarGui warGui=null;
+    
+    public MessageWriter(WarGui warGui){
+        this.warGui=warGui;
+    }
+
+    ArrayList<String> message_list =new ArrayList();
     String message;
     Connection conn;
 
@@ -28,17 +37,24 @@ public class MessageWriter extends Thread {
             message=("SHOOT#");
         }
         conn.sendMessage(message);
-        message_list.add(message);
+        if(message_list!=null) {
+            message_list.add(message);
+        }
 
     }
 
     @Override
     public void run() {
 
-       /* while(true){
-            String message = JOptionPane.showInputDialog("Give Your Command : ");
-            write(message);
-        }*/
+        JPanel panel = warGui.getlabelPanel();
+        panel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                write(e);
+            }
+        });
+
+
 
     }
 }
