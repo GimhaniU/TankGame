@@ -1,7 +1,7 @@
 package com.company;
 import GUI.TankGrid;
+import GUI.WarGui;
 import Parser.Map;
-import connection.Connection;
 import connection.MessageReader;
 import connection.MessageWriter;
 
@@ -14,7 +14,7 @@ public class Main {
         messageWriter.start();
 
         Map map=new Map();
-        TankGrid tankGrid=new TankGrid();
+        WarGui tankGrid=new WarGui();
         tankGrid.setVisible(true);
         MessageReader messageReader = new MessageReader(tankGrid);
 
