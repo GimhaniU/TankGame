@@ -17,7 +17,9 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author Nuwantha
  */
-public class WarGui extends JFrame {
+public class WarGui extends JFrame  {
+
+
     public WarGui() {
         initComponents();
 
@@ -185,7 +187,7 @@ public class WarGui extends JFrame {
 
 
     private void draw(Entity entity) {
-        System.out.println(entity.getY() + " " + entity.getX());
+        //System.out.println(entity.getY() + " " + entity.getX());
         JLabel childLabel = labelarray[entity.getY()][entity.getX()];
         if (entity.getEnType() == Entity_Type.Water) {
             childLabel.setIcon(new ImageIcon("src/images/water.jpg"));//water
@@ -216,4 +218,5 @@ public class WarGui extends JFrame {
             childLabel.setBackground(Color.lightGray);
         }
     }
+
 }
