@@ -1,5 +1,7 @@
 package connection;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by DinsuG on 10/21/2015.
+ * Created by Gimhani on 10/21/2015.
  */
 public class Connection {
     static Connection connection;
@@ -46,19 +48,27 @@ public class Connection {
         } catch(Exception e){
             System.out.println("Runtime Exceptions:"+e);
         }finally{
+            IOUtils.closeQuietly(client);
+            IOUtils.closeQuietly(out);
+
+/*
             try {
                 client.close();
                 out.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
         }
 
 
     }
     //The Socket will be left unclosed on some exceptions.So moved close blocks to finally block.
-    public String getUpdates(){//this method blocks untill msg receives.Use time outs.
+
+    //this method blocks until msg receives.Use time outs.
+
+    public String getUpdates(){
+
         String update;
         ServerSocket serverReader=null ;
         Socket clientReader=null;
@@ -75,6 +85,7 @@ public class Connection {
             return "Error while Rading from the socket";
         }finally{
             try {
+
                 if(serverReader!=null)serverReader.close();
                 if(clientReader!=null)clientReader.close();
                 if(socketReader!=null)socketReader.close();
@@ -84,10 +95,11 @@ public class Connection {
             }
         }
 
-
     }
 
-    public String getUpdates(int timeout){//this method blocks untill msg received or timeout
+    //this method blocks until msg received or timeout
+
+    public String getUpdates(int timeout){
         String update;
         ServerSocket serverReader=null ;
         Socket clientReader=null;
@@ -102,7 +114,7 @@ public class Connection {
             return update;
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            return "Error while Rading from the socket";
+            return "Error while Reading from the socket";
         }finally{
             try {
                 if(serverReader!=null)serverReader.close();
@@ -113,7 +125,6 @@ public class Connection {
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
 
     }
 

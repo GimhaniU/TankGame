@@ -16,6 +16,8 @@ public class MessageReader extends Thread {
     Connection conn;
     ArrayList<String> messagelist;
 
+
+    //we keep pointer to map object and grid object
     public MessageReader(WarGui grid) {
 
         conn = Connection.getInstance();
@@ -25,32 +27,37 @@ public class MessageReader extends Thread {
 
     }
 
-
+    // we use this code to get server messages
     public void listen(){
 
         Message_Decorder decode = new Message_Decorder(map,grid);
 
-        //Map tem_map=null;
-        //int i=0;
         while(true){
 
+            //get server message
             String server_message = conn.getUpdates();
             if (server_message != null) {
                 System.out.println(server_message + "\n");
+
+                //update map
                 map.Update();
                 if (grid != null) {
                     grid.updateGrid(map);
                 }
 
-                decode = new Message_Decorder(map,grid);
+                //decode the message and update the map
+                //decode = new Message_Decorder(map,grid);
+                decode.setMap(map);
+                decode.setGrid(grid);
                 map = decode.process(server_message);
+
                 map.Update();
                 if (grid != null) {
                     grid.updateGrid(map);
                 }
+
                 messagelist.add(server_message);
             }
-
 
         }
     }

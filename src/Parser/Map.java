@@ -109,9 +109,7 @@ public class Map {
             Coin_Pile coin_pile = coinPiles.get(i);
             //System.out.println("starttime :"+coin_pile.getStartTime() );
             if((current_time-coin_pile.getStartTime())<coin_pile.getLifeTime()){
-
                 tem_coin_piles.add(coin_pile);
-
             }
 
         }

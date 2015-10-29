@@ -27,6 +27,10 @@ public class Message_Decorder {
 
     }
 
+    public void setGrid(WarGui grid) {
+        this.grid=grid;
+    }
+
 
     public Map getMap() {
         return map;
@@ -35,6 +39,8 @@ public class Message_Decorder {
     public void setMap(Map map) {
         this.map = map;
     }
+
+
 
     public Map process(String message) {
         if (message.length() > 2) {
@@ -93,9 +99,12 @@ public class Message_Decorder {
     }
 
     private void processStartMessage(String message) {
+        //remove # charactor
         if (message.endsWith("#")) {
             message = message.substring(1, message.length() - 1);
         }
+
+
         if (message.startsWith("S")) {
             message = message.substring(1);
             String[] messages = message.split(":");
@@ -107,7 +116,6 @@ public class Message_Decorder {
             direction = Integer.parseInt(messages[2]);
             map.setClientID(id);
 
-            //System.out.println("id :" + id + "  x :" + x + " y :" + y + " direction :" + direction);
             Tank myTank = new Tank(false, 0, 0, direction, id, x, y);
             ArrayList<Tank> tanks = map.getTanks();
             tanks.add(myTank);
@@ -115,19 +123,15 @@ public class Message_Decorder {
         }
     }
 
-
+    // process I:....message
     private void processInitializationMessage(String message) {
         message = message.substring(1, message.length() - 1);
         String[] messages = message.split(":");
         String brick_coordinates, stone_coordinates, water_coordinates;
-
         int count = 1;
-
-
         int id = Integer.parseInt(messages[count].substring(1)); //get player number from string
         count++;
         map.setClientID(id);
-       // System.out.println("client id :" + id);
         brick_coordinates = messages[count];
         count++;
         stone_coordinates = messages[count];
@@ -137,12 +141,10 @@ public class Message_Decorder {
         placeBricks(brick_coordinates);
         placeStone(stone_coordinates);
         placeWater(water_coordinates);
-        //map.Joined = true;
-        //joinCheck = true;
 
     }
 
-
+    //add coin piles to the map
     private void placeCoinPile(String message) {
 
         if (message.endsWith("#")) {
@@ -165,7 +167,7 @@ public class Message_Decorder {
 
     }
 
-
+    //add life packs to the map
     private void placeLifePack(String message) {
         if (message.endsWith("#")) {
             message = message.substring(0, message.length() - 1);
@@ -184,7 +186,7 @@ public class Message_Decorder {
 
     }
 
-
+    //process G:... message
     private void processGameUpdateMessage(String message) {
         message=message.substring(0,message.length()-2);
         String[] messages = message.split(":");
@@ -200,14 +202,12 @@ public class Message_Decorder {
 
     }
 
-
+    //add bricks to map
     private void placeBricks(String message) {
         String[] coordinates = message.split(";");
         ArrayList<Brick> bricks = new ArrayList<>();
-        //System.out.println("Bricks co-ordinates\n---------------------------------------");
         for (int i = 0; i < coordinates.length; i++) {
             Brick brick = new Brick();
-          //  System.out.println("x : " + coordinates[i].charAt(0) + ", y : " + coordinates[i].charAt(2));
             brick.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
             brick.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
             int health=0;
@@ -220,42 +220,37 @@ public class Message_Decorder {
             }
         }
         map.setBricks(bricks);
-
-
     }
 
+    //add stones to map
     private void placeStone(String message) {
         String[] coordinates = message.split(";");
         ArrayList<Stone> stones = new ArrayList<>();
 
         for (int i = 0; i < coordinates.length; i++) {
             Stone stone = new Stone();
-           // System.out.println("x : " + coordinates[i].charAt(0) + ", y : " + coordinates[i].charAt(2));
-            stone.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
-            stone.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
-
+            stone.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));
+            stone.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));
             stones.add(stone);
         }
         map.setStones(stones);
     }
 
-
+    // add water to map
     private void placeWater(String message) {
         String[] coordinates = message.split(";");
         ArrayList<Water> waters = new ArrayList<>();
 
         for (int i = 0; i < coordinates.length; i++) {
             Water water = new Water();
-           // System.out.println("x : " + coordinates[i].charAt(0) + ", y : " + coordinates[i].charAt(2));
             water.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
             water.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
-
             waters.add(water);
         }
         map.setWaters(waters);
     }
 
-
+    // add tank to the map
     private void placeTank(ArrayList<String> players) {
 
         ArrayList<Tank> tanks = new ArrayList();
