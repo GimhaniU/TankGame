@@ -78,22 +78,26 @@ public class Message_Decorder {
     }
 
     private String processReplyMessage(String message) {
-        if(message=="OBSTACLE#"){
-            return "obstacle ahead";
-        }else if(message=="DEAD#"){
-            return "you are dead";
-        }else if(message=="INVALID_CELL#"){
-            return "can't go there";
-        }else if(message=="GAME_NOT_STARTED_YET#"){
-            return "wait. game is not started yet";
-        }else if(message=="CELL_OCCUPIED#"){
-            return "cell is already occupied";
-        }else if(message=="TOO_QUICK#"){
-            return "be slow";
-        }else if(message=="GAME_HAS_FINISHED#"){
-            return "game over";
-        }else if(message=="NOT_A_VALID_CONTESTANT#"){
-            return "you are not a player";
+        if(message.equals("OBSTACLE;25#")){
+            return "Obstacle ahead";
+        }else if(message.equals("DEAD#")){
+            return "You are dead";
+        }else if(message.equals("INVALID_CELL#")){
+            return "Can't go there";
+        }else if(message.equals("GAME_NOT_STARTED_YET#")){
+            return "Wait. game is not started yet";
+        }else if(message.equals("CELL_OCCUPIED#")){
+            return "Cell is already occupied";
+        }else if(message.equals("TOO_QUICK#")){
+            return "Be slow";
+        }else if(message.equals("GAME_HAS_FINISHED#") ){
+            return "Game over";
+        }else if(message.equals("GAME_FINISHED#") ){
+            return "Game over for you";
+        } else if(message.equals("NOT_A_VALID_CONTESTANT#")){
+            return "You are not a player";
+        }else if(message.equals("PITFALL#")){
+            return "You fall into water--dead";
         }
         return message;
     }

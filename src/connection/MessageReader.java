@@ -15,7 +15,12 @@ public class MessageReader extends Thread {
     WarGui grid;
     Connection conn;
     ArrayList<String> messagelist;
+    //MessageWriter messageWriter=new MessageWriter();
+   public boolean start=false;
 
+    public Map getMap(){
+        return map;
+    }
 
     //we keep pointer to map object and grid object
     public MessageReader(WarGui grid) {
@@ -46,7 +51,7 @@ public class MessageReader extends Thread {
                 }
 
                 //decode the message and update the map
-                //decode = new Message_Decorder(map,grid);
+
                 decode.setMap(map);
                 decode.setGrid(grid);
                 map = decode.process(server_message);
@@ -57,6 +62,10 @@ public class MessageReader extends Thread {
                 }
 
                 messagelist.add(server_message);
+                if(map.getTanks().size()>0){
+
+                }
+
             }
 
         }

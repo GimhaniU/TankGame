@@ -1,39 +1,44 @@
 package connection;
 
+import AI.Command;
+import AI.PathFinder;
 import GUI.WarGui;
+import Parser.Map;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Created by Gimhani on 10/26/2015.
  */
-public class MessageWriter extends Thread {
-    private  WarGui warGui=null;
-    
-    public MessageWriter(WarGui warGui){
-        this.warGui=warGui;
-    }
-
+public class MessageWriter extends Thread{
+   // private  WarGui warGui=null;
     ArrayList<String> message_list =new ArrayList();
     String message;
     Connection conn;
+    MessageReader messageReader;
 
+    public MessageWriter(MessageReader messageReader){
+       this.messageReader=messageReader;
+   }
 
-    public void write(KeyEvent e){
+    public void write(Command command){
+
         conn=Connection.getInstance();
-        if(e.getKeyCode()== KeyEvent.VK_UP){
+        if(command == command.UP){
             message=("UP#");
-        }else if(e.getKeyCode()==KeyEvent.VK_DOWN){
+        }else if(command == command.DOWN){
             message=("DOWN#");
-        }else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+        }else if(command == command.RIGHT){
+
             message=("RIGHT#");
-        }else if(e.getKeyCode()==KeyEvent.VK_LEFT){
+        }else if(command == command.LEFT){
             message=("LEFT#");
-        }else if(e.getKeyCode()==KeyEvent.VK_SPACE){
+        }else if(command == command.SHOOT){
             message=("SHOOT#");
         }
         conn.sendMessage(message);
@@ -43,18 +48,52 @@ public class MessageWriter extends Thread {
 
     }
 
-    @Override
-    public void run() {
 
+    public void run() {
+        /*
         JPanel panel = warGui.getlabelPanel();
         panel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
+
                 write(e);
             }
         });
 
+        */
+        while(true) {
 
+            Random random = new Random();
+
+            int value = PathFinder.pathGenerator(messageReader.getMap());
+            switch (value) {
+                case 1:
+                    write(Command.UP);
+                    break;
+                case 2:
+                    write(Command.DOWN);
+                    break;
+                case 3:
+
+                    write(Command.RIGHT);
+                    break;
+                case 4:
+                    write(Command.LEFT);
+                    break;
+                case 5:
+                    write(Command.SHOOT);
+                    break;
+
+
+            }
+
+            try {
+                sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 }

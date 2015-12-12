@@ -21,8 +21,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Nuwantha
  */
 public class WarGui extends JFrame {
+    Map map=null;
     public WarGui() {
         initComponents();
+
 
         //setting up 20x20 grid
         labelPanel.setLayout(new GridLayout(10, 10));
@@ -45,8 +47,8 @@ public class WarGui extends JFrame {
         tableModel.setColumnCount(0);
         tableModel.setRowCount(5);
         tableModel.addColumn("Player");
-        tableModel.addColumn("Coins");
         tableModel.addColumn("Points");
+        tableModel.addColumn("Coins");
         tableModel.addColumn("Health");
         tableModel.setValueAt("P0", 0, 0);
         tableModel.setValueAt("P1", 1, 0);
@@ -85,6 +87,7 @@ public class WarGui extends JFrame {
         textArea1 = new JTextArea();
         scrollPane2 = new JScrollPane();
         table1 = new JTable();
+        idlabel = new JLabel();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -95,7 +98,7 @@ public class WarGui extends JFrame {
         title_label.setHorizontalAlignment(SwingConstants.CENTER);
         title_label.setFont(new Font("Showcard Gothic", Font.BOLD, 28));
         contentPane.add(title_label);
-        title_label.setBounds(0, 0, 1150, 65);
+        title_label.setBounds(0, 0, 975, 65);
 
         //======== labelPanel ========
         {
@@ -135,9 +138,15 @@ public class WarGui extends JFrame {
             }
             panel2.add(scrollPane2);
             scrollPane2.setBounds(10, 115, 145, 180);
+
+            //---- idlabel ----
+            idlabel.setText("text");
+            idlabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            panel2.add(idlabel);
+            idlabel.setBounds(20, 325, 130, 35);
         }
         contentPane.add(panel2);
-        panel2.setBounds(985, 80, 165, 560);
+        panel2.setBounds(985, 5, 165, 635);
 
         { // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -166,10 +175,14 @@ public class WarGui extends JFrame {
     private JTextArea textArea1;
     private JScrollPane scrollPane2;
     private JTable table1;
+    private JLabel idlabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     JLabel[][] labelarray;
 
     public void updateGrid(Map map) {
+        this.map=map;
+
+        idlabel.setText("Your ID:"+map.getClientID());
         for (JLabel[] subarray : labelarray) {
             for (JLabel label : subarray) {
                 label.setIcon(null);
@@ -229,15 +242,32 @@ public class WarGui extends JFrame {
             childLabel.setText(":" + ((Life_Pack) entity).getValue());
         } else if (entity.getEnType() == Entity_Type.Tank /* && entity.getId()==myone*/) {
             Tank tank = (Tank) entity;
+
             //setting directed tank
             if (((Tank) entity).getDirection() == 1) {
-                childLabel.setIcon(new ImageIcon("src/images/mytank-1.png"));
+                if(((Tank) entity).getId()==map.getClientID()){
+                    childLabel.setIcon(new ImageIcon("src/images/tank-1.png"));
+                }else {
+                    childLabel.setIcon(new ImageIcon("src/images/mytank-1.png"));
+                }
             } else if (((Tank) entity).getDirection() == 2) {
-                childLabel.setIcon(new ImageIcon("src/images/mytank-2.png"));
+                if(((Tank) entity).getId()==map.getClientID()){
+                    childLabel.setIcon(new ImageIcon("src/images/tank-2.png"));
+                }else {
+                    childLabel.setIcon(new ImageIcon("src/images/mytank-2.png"));
+                }
             } else if (((Tank) entity).getDirection() == 3) {
-                childLabel.setIcon(new ImageIcon("src/images/mytank-3.png"));
+                if(((Tank) entity).getId()==map.getClientID()){
+                    childLabel.setIcon(new ImageIcon("src/images/tank-3.png"));
+                }else {
+                    childLabel.setIcon(new ImageIcon("src/images/mytank-3.png"));
+                }
             } else {
-                childLabel.setIcon(new ImageIcon("src/images/mytank-0.png"));
+                if(((Tank) entity).getId()==map.getClientID()){
+                    childLabel.setIcon(new ImageIcon("src/images/tank-0.png"));
+                }else {
+                    childLabel.setIcon(new ImageIcon("src/images/mytank-0.png"));
+                }
             }
             childLabel.setText("h : " + ((Tank) entity).getHealth() + " p :" + ((Tank) entity).getCoins());
             addDataToTable(tank);

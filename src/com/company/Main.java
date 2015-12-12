@@ -8,38 +8,21 @@ import connection.MessageWriter;
 
 public class Main {
 
-
+static  MessageReader messageReader;
     public static void main(String[] args) {
 
-       // Map map=new Map();
-
+        //Starting the gui
         WarGui tankGrid=new WarGui();
         tankGrid.setVisible(true);
+        //thread to write messages
+        messageReader = new MessageReader(tankGrid);
+        messageReader.start();
 
-
-        MessageWriter messageWriter = new MessageWriter(tankGrid);
+        MessageWriter messageWriter =new MessageWriter(messageReader);
         messageWriter.start();
 
 
-        MessageReader messageReader = new MessageReader(tankGrid);
-        messageReader.start();
 
 
-       //MapUpdater mapUpdater = new MapUpdater(map);
-        //mapUpdater.start();
-
-        /*Thread t=new Thread(tankGrid);
-        try {
-            t.join(mapUpdater.getId());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        t.start();*//*
-        while(true) {
-            map = messageReader.listen(map);
-           // mapUpdater.setMap(map);
-            map.Update();
-            tankGrid.updateGrid(map);
-        }*/
     }
 }

@@ -39,11 +39,11 @@ public class Connection {
             out.writeBytes(message);
 
         } catch (UnknownHostException ex) {
-            System.out.println("Severe: \n "+Connection.class.getName()+"\n"+ex+"\n");
+            System.out.println("Exception: \n "+Connection.class.getName()+"\n"+ex+"\n");
             ex.printStackTrace();
         } catch (IOException ex) {
 
-            System.out.println("Severe: \n "+Connection.class.getName()+"\n"+ex);
+            System.out.println("Exception: \n "+Connection.class.getName()+"\n"+ex);
             ex.printStackTrace();
         } catch(Exception e){
             System.out.println("Runtime Exceptions:"+e);
@@ -51,7 +51,7 @@ public class Connection {
             IOUtils.closeQuietly(client);
             IOUtils.closeQuietly(out);
 
-/*
+            /*
             try {
                 client.close();
                 out.close();
@@ -82,9 +82,14 @@ public class Connection {
             return update;
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            return "Error while Rading from the socket";
+            return "Error reading from the socket";
         }finally{
-            try {
+            IOUtils.closeQuietly(clientReader);
+            IOUtils.closeQuietly(serverReader);
+            IOUtils.closeQuietly(socketReader);
+
+
+           /* try {
 
                 if(serverReader!=null)serverReader.close();
                 if(clientReader!=null)clientReader.close();
@@ -92,40 +97,11 @@ public class Connection {
             } catch (IOException ex) {
                 System.err.println("Could not close network socket");
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
         }
 
     }
 
-    //this method blocks until msg received or timeout
 
-    public String getUpdates(int timeout){
-        String update;
-        ServerSocket serverReader=null ;
-        Socket clientReader=null;
-        InputStreamReader socketReader=null;
-        try {
-            serverReader = new ServerSocket(7000);
-            serverReader.setSoTimeout(timeout);
-            clientReader = serverReader.accept();
-            socketReader = new InputStreamReader(clientReader.getInputStream());
-            BufferedReader input = new BufferedReader(socketReader);
-            update= input.readLine();
-            return update;
-        } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            return "Error while Reading from the socket";
-        }finally{
-            try {
-                if(serverReader!=null)serverReader.close();
-                if(clientReader!=null)clientReader.close();
-                if(socketReader!=null)socketReader.close();
-            } catch (IOException ex) {
-                System.err.println("Could not close network socket");
-                Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-    }
 
 }
