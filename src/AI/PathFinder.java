@@ -1,6 +1,7 @@
 package AI;
 
 import Parser.Map;
+import game_objects.Brick;
 import game_objects.Coin_Pile;
 import game_objects.Stone;
 import game_objects.Water;
@@ -12,8 +13,9 @@ import java.lang.reflect.Array;
  */
 public class PathFinder {
 
-
+   static Map mainMap;
    static public int pathGenerator(Map map){
+       mainMap=map;
        if(map.getTanks().size()>0){
             int direction = map.getTanks().get(0).getDirection();
             int x = map.getTanks().get(0).getX();
@@ -31,43 +33,59 @@ public class PathFinder {
                     newY=coin_pile.getY();
                     move=true;
                 }
-
             }
-          // System.out.println(newX+" : "+newY);
-        boolean next=false;
-       if(newX-x>0 && move){
-           for (Water water : map.getWaters()) {
-               if(water.getX()==x+1 && water.getY()==y){
-                   System.out.println("water coordinate = :"+water.getX());
-                   next=true;
-                   break;
-               }
-           }
-           if(!next ) {
-               for (Stone stone : map.getStones()) {
-                   if(stone.getX()==x+1 && stone.getY()==y){
 
+           if((newY-y)>0 && move){
+               boolean next=false;
+               for (Water water : map.getWaters()) {
+                   System.out.println("water coordinate = :"+water.getX() + ":"+y+1);
+                   if(water.getX()==x && water.getY()==y+1){
                        next=true;
                        break;
                    }
                }
                if(!next ) {
-                   System.out.println("DOWN DOWN");
-                   return 2;
+                   for (Stone stone : map.getStones()) {
+                       if(stone.getX()==x && stone.getY()==y+1){
+                           next=true;
+                           break;
+                       }
+                   }
+                   if(!next ){
+                       for (Brick brick : map.getBricks()) {
+                           if(brick.getX()==x && brick.getY()==y+1){
+                               next=true;
+                               break;
+                           }
+                       }
+                       if(!next){
+
+                       return 2;
+
+                       }
+                   }
                }
+           }
+
+       if(newY-y<0 && move)
+       {
+           int checkNeibours = checkNeibours(x , y-1);
+           if(checkNeibours==1) {
+               return 1;
+           }
+       }
+       if(newX-x>0&& move ){
+           int checkNeibours = checkNeibours(x + 1, y);
+           if(checkNeibours==1) {
+               return 3;
            }
        }
 
-       if(newX-x<0 && move)
-           {
-           return  1;
-       }
-       if(newY-y>0&& move ){
-           return 3;
-       }
-
-       if(newY-y<0 && move){
-           return 4;
+       if(newX-x<0 && move){
+           int checkNeibours = checkNeibours(x - 1, y);
+           if(checkNeibours==1) {
+               return 4;
+           }
        }
 
        }
@@ -75,5 +93,37 @@ public class PathFinder {
         return 5;
 
 
+    }
+
+    public static int checkNeibours(int x,int y){
+        boolean next=false;
+        for (Water water : mainMap.getWaters()) {
+            System.out.println("water coordinate = :"+water.getX() + ":"+y+1);
+            if(water.getX()==x && water.getY()==y){
+                next=true;
+                break;
+            }
+        }
+        if(!next ) {
+            for (Stone stone : mainMap.getStones()) {
+                if(stone.getX()==x && stone.getY()==y){
+                    next=true;
+                    break;
+                }
+            } if(!next ){
+                for (Brick brick : mainMap.getBricks()) {
+                    if(brick.getX()==x && brick.getY()==y+1){
+                        next=true;
+                        break;
+                    }
+                }
+                if(!next){
+
+                    return 1;
+
+                }
+            }
+        }
+        return 0;
     }
 }

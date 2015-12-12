@@ -265,8 +265,9 @@ public class Message_Decorder {
 
             Tank tank = new Tank();
             int playerID = Integer.parseInt(details[0].substring(1));
-            int x = Integer.parseInt(String.valueOf(details[1].charAt(0)));
-            int y = Integer.parseInt(String.valueOf(details[1].charAt(2)));
+            String[] coordinades = details[1].split(",");
+            int x = Integer.parseInt(coordinades[0]);
+            int y = Integer.parseInt(coordinades[1]);
             int direction = Integer.parseInt(details[2]);
             int health = Integer.parseInt(details[4]);
             int coins = Integer.parseInt(details[5]);
