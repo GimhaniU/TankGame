@@ -21,7 +21,7 @@ public class moveChooser {
 
     int  times=20;
     public  int shortestpathCalculator(int x,int y,int x1,int y1,int numberOfTimes) {
-        if (x >= 0 && x < 10 && y >= 0 && y < 10 && numberOfTimes < times && (memory2D[x][y]==0) ) {
+        if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10 && numberOfTimes < times && (memory2D[x][y]==0) ) {
             if (x == x1 && y == y1){
                 times = numberOfTimes;
                 return numberOfTimes;
@@ -60,7 +60,7 @@ public class moveChooser {
                 return min;
             }
         }
-        return 15;
+        return 20;
 
     }
 

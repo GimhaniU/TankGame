@@ -27,13 +27,13 @@ public class PathFinder {
             int y = map.getTanks().get(0).getY();
 
 
-            int newX=10;
-            int newY=10;
+            int newX=100;
+            int newY=100;
             boolean move=false;
             for (Coin_Pile coin_pile : map.getCoinPiles()) {
                 int xCoordinate = coin_pile.getX() - x;
                 int yCoordinate = coin_pile.getY() - y;
-                if(Math.abs(xCoordinate)* Math.abs(yCoordinate)<Math.abs(newX-x)*Math.abs(newY-y)){
+                if(Math.abs(xCoordinate)+ Math.abs(yCoordinate)<Math.abs(newX-x)+Math.abs(newY-y)){
                     newX=coin_pile.getX();
                     newY=coin_pile.getY();
                     move=true;
