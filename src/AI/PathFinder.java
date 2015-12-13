@@ -1,10 +1,7 @@
 package AI;
 
 import Parser.Map;
-import game_objects.Brick;
-import game_objects.Coin_Pile;
-import game_objects.Stone;
-import game_objects.Water;
+import game_objects.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -21,10 +18,21 @@ public class PathFinder {
    static Map mainMap;
    static public int pathGenerator(Map map){
        mainMap=map;
-       if(map.getTanks().size()>0){
-            int direction = map.getTanks().get(0).getDirection();
-            int x = map.getTanks().get(0).getX();
-            int y = map.getTanks().get(0).getY();
+
+
+
+           Tank mytank=null;
+           for (Tank tank : map.getTanks()) {
+               if(tank.getId()==map.getClientID()){
+                   mytank=tank;
+                   break;
+               }
+           }
+           if(mytank !=null){
+
+           int direction = mytank.getDirection();
+            int x = mytank.getX();
+            int y = mytank.getY();
 
 
             int newX=100;
@@ -39,8 +47,21 @@ public class PathFinder {
                     move=true;
                 }
             }
-           moveChooser moveChooser = new moveChooser(mainMap);
-           int b=moveChooser.shortestpathCalculator(x,y,newX,newY,1);
+            if(!move || mytank.getHealth()<100 ){
+                for (Life_Pack life_pack : map.getLifePacks()) {
+                    int xCoordinate = life_pack.getX() - x;
+                    int yCoordinate = life_pack.getY() - y;
+                    if(Math.abs(xCoordinate)+ Math.abs(yCoordinate)<Math.abs(newX-x)+Math.abs(newY-y)){
+                        newX=life_pack.getX();
+                        newY=life_pack.getY();
+                        move=true;
+                    }
+
+                }
+
+            }
+           moveChooser moveChooser = new moveChooser(mainMap,mytank);
+           int b=moveChooser.shortestpathCalculator(x, y, newX, newY, 1);
            System.out.println( "return value is  : " + b);
            return b;
 

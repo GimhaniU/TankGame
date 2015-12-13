@@ -3,6 +3,7 @@ package AI;
 import Parser.Map;
 import game_objects.Brick;
 import game_objects.Stone;
+import game_objects.Tank;
 import game_objects.Water;
 
 /**
@@ -12,16 +13,18 @@ public class moveChooser {
 
     int [][] memory2D=new int[10][10];
     Map map;
+    Tank myTank;
 
-    moveChooser(Map map){
+    moveChooser(Map map, Tank mytank){
          memory2D=new int[10][10];
          this.map=map;
-         mapConvertorToArray();
+            this.myTank=mytank;
+        mapConvertorToArray();
     }
 
     int  times=20;
-    public  int shortestpathCalculator(int x,int y,int x1,int y1,int numberOfTimes) {
-        if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10 && numberOfTimes < times && (memory2D[x][y]==0) ) {
+    public synchronized int shortestpathCalculator(int x,int y,int x1,int y1,int numberOfTimes) {
+        if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10 && numberOfTimes < times && ((memory2D[x][y]==0) || memory2D[x][y]==3) ) {
             if (x == x1 && y == y1){
                 times = numberOfTimes;
                 return numberOfTimes;
@@ -37,12 +40,24 @@ public class moveChooser {
 
             if (numberOfTimes == 1) {
                 if (value1 < value2 && value1 < value3 && value1 < value4) {
+                    if(memory2D[x+1][y]==3 &&myTank.getDirection()==1){
+                        return 5;
+                    }
                     return 3;
                 } else if (value2 < value1 && value2 < value3 && value2 < value4) {
+                    if(memory2D[x][y+1]==3 && myTank.getDirection()==2){
+                        return 5;
+                    }
                     return 2;
                 } else if (value3 < value2 && value3 < value1 && value3 < value4) {
+                    if(memory2D[x-1][y]==3 && myTank.getDirection()==3){
+                        return 5;
+                    }
                     return 4;
                 } else if (value4 < value2 && value4 < value3 && value4 < value1) {
+                    if(memory2D[x][y-1]==3 && myTank.getDirection()==0){
+                        return 5;
+                    }
                     return 1;
                 }
             } else {
@@ -76,8 +91,6 @@ public class moveChooser {
         for (Brick brick : map.getBricks()) {
             memory2D[brick.getX()][brick.getY()]=3;
         }
-
-
     }
 
 }

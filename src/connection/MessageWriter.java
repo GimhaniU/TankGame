@@ -86,7 +86,7 @@ public class MessageWriter extends Thread{
             }
 
             try {
-                sleep(2400);
+                sleep(1200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
