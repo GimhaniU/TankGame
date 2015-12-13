@@ -83,12 +83,10 @@ public class MessageWriter extends Thread{
                 case 5:
                     write(Command.SHOOT);
                     break;
-
-
             }
 
             try {
-                sleep(1000);
+                sleep(2400);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

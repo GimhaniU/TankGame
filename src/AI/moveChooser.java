@@ -9,18 +9,17 @@ import game_objects.Water;
  * Created by Nuwantha on 12/12/2015.
  */
 public class moveChooser {
-     //int [][] memory=new int[10][10];
-     int [][] memory2D=new int[10][10];
+
+    int [][] memory2D=new int[10][10];
     Map map;
 
     moveChooser(Map map){
-       //  memory=new int[10][10];
          memory2D=new int[10][10];
          this.map=map;
          mapConvertorToArray();
     }
 
-    int  times=30;
+    int  times=20;
     public  int shortestpathCalculator(int x,int y,int x1,int y1,int numberOfTimes) {
         if (x >= 0 && x < 10 && y >= 0 && y < 10 && numberOfTimes < times && (memory2D[x][y]==0) ) {
             if (x == x1 && y == y1){
@@ -61,7 +60,7 @@ public class moveChooser {
                 return min;
             }
         }
-        return 30;
+        return 15;
 
     }
 
