@@ -62,12 +62,14 @@ public class SetUp extends BasicGame {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        ArrayList<Tank> tanks = map.getTanks();
-        bulletpack=new ArrayList<>();
-        int j=1;
-        for(Tank tank:tanks){
-            bulletpack.add(new Bullet(j));
-            j++;
+        if(map!=null) {
+            ArrayList<Tank> tanks = map.getTanks();
+            bulletpack = new ArrayList<>();
+            int j = 1;
+            for (Tank tank : tanks) {
+                bulletpack.add(new Bullet(j));
+                j++;
+            }
         }
     }
     public void update(Map map) throws SlickException {
