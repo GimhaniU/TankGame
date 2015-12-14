@@ -35,7 +35,6 @@ public class moveChooser {
 
             int value3 = shortestpathCalculator(x - 1, y, x1, y1, numberOfTimes + 1);
 
-
             int value4 = shortestpathCalculator(x, y - 1, x1, y1, numberOfTimes + 1);
 
             if (numberOfTimes == 1) {

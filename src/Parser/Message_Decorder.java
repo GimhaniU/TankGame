@@ -1,11 +1,8 @@
 package Parser;
 
-import GUI.WarGui;
-import Parser.Map;
-import com.sun.org.apache.xpath.internal.SourceTree;
+import SlickGui.SetUp;
 import game_objects.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -14,20 +11,20 @@ import java.util.ArrayList;
 public class Message_Decorder {
 
     private Map map = null;
-    private WarGui grid;
+    private SetUp grid;
 
     public Message_Decorder(Map map) {
         this.map = map;
 
     }
 
-    public Message_Decorder(Map map, WarGui grid) {
+    public Message_Decorder(Map map, SetUp grid) {
         this.map = map;
         this.grid=grid;
 
     }
 
-    public void setGrid(WarGui grid) {
+    public void setGrid(SetUp grid) {
         this.grid=grid;
     }
 
@@ -70,7 +67,7 @@ public class Message_Decorder {
                 default:
                     String replyMessage = processReplyMessage(message);
                     if(grid!=null) {
-                        grid.getTextArea().setText(replyMessage);
+                        grid.writeMessage(replyMessage);
                     }
             }
         }
