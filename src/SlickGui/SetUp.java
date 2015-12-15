@@ -68,8 +68,14 @@ public class SetUp extends BasicGame {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        for(Bullet b: bulletpack){
-            b.update(i);
+        if(bulletpack!=null) {
+            for (Bullet b : bulletpack) {
+                if (b.is_active()) {
+                    b.update(i);
+                } else {
+                    bulletpack.remove(b);
+                }
+            }
         }
     }
     public void update(Map map) throws SlickException {
@@ -164,6 +170,7 @@ public class SetUp extends BasicGame {
                             Rectangle p = new Rectangle(bullet.getX(),bullet.getY(),58,58);
                             if(r.intersects(p)){
                                 bullet.setIs_active(false);
+                                bulletpack.remove(bullet);
                             }
                         }
                     }
