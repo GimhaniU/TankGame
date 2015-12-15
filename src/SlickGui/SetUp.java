@@ -5,6 +5,10 @@ package SlickGui;
         import Parser.Map;
         import game_objects.*;
         import org.newdawn.slick.*;
+        import org.newdawn.slick.geom.Rectangle;
+        import org.newdawn.slick.geom.Vector2f;
+
+        import java.io.BufferedReader;
         import java.util.ArrayList;
 
 /**
@@ -30,9 +34,10 @@ public class SetUp extends BasicGame {
     private Image tank_3_img=null;
     private Image water_img=null;
     private Image stone_img=null;
+    private Image bullet_hor_img=null;
+    private Image bullet_ver_img=null;
 
     private ArrayList<Bullet> bulletpack=null;
-    private int time_passed;
 
     public SetUp(String title) {
         super(title);
@@ -55,21 +60,16 @@ public class SetUp extends BasicGame {
         tank_3_img=new Image("src/images/tank-3.png");
         water_img=new Image("src/images/water.jpg");
         stone_img=new Image("src/images/stone.png");
+        bullet_hor_img=new Image("src/images/bullet-hor.png");
+        bullet_ver_img=new Image("src/images/bullet-ver.png");
 
         bulletpack=new ArrayList<>();
-        time_passed=0;
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        if(map!=null) {
-            ArrayList<Tank> tanks = map.getTanks();
-            bulletpack = new ArrayList<>();
-            int j = 1;
-            for (Tank tank : tanks) {
-                bulletpack.add(new Bullet(j));
-                j++;
-            }
+        for(Bullet b: bulletpack){
+            b.update(i);
         }
     }
     public void update(Map map) throws SlickException {
@@ -81,8 +81,6 @@ public class SetUp extends BasicGame {
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         this.graphics=graphics;
         background.draw(0, 0, 972, 648);
-
-
 
         //add bricks
         if(map!=null) {
@@ -114,14 +112,24 @@ public class SetUp extends BasicGame {
 
             ArrayList<Tank> tanks = map.getTanks();
             for (Tank tank : tanks) {
-                if(tank.getDirection()==1){
-                    drawEntity(tank,tank_1_img);
-                }else if(tank.getDirection()==2){
-                    drawEntity(tank,tank_2_img);
-                }else if(tank.getDirection()==3){
-                    drawEntity(tank,tank_3_img);
-                }else{
-                    drawEntity(tank,tank_0_img);
+                if(tank.getHealth()>0) { //otherwise it must not show the image of the tank, tank is dead
+                    if (tank.getDirection() == 1) {
+                        drawEntity(tank, tank_1_img);
+                    } else if (tank.getDirection() == 2) {
+                        drawEntity(tank, tank_2_img);
+                    } else if (tank.getDirection() == 3) {
+                        drawEntity(tank, tank_3_img);
+                    } else {
+                        drawEntity(tank, tank_0_img);
+                    }
+                    //if tank is shooting
+                    if(tank.isShot()){
+                        if(tank.getDirection()==0 || tank.getDirection()==2) {
+                            bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_ver_img));
+                        }else{
+                            bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_hor_img));
+                        }
+                    }
                 }
 
             }
@@ -135,7 +143,36 @@ public class SetUp extends BasicGame {
             for (Life_Pack life_pack : life_packs) {
                 drawEntity(life_pack, lifepack_img);
             }
+
+            //to move the already available bullets
+            for (Bullet bullet : bulletpack) {
+                graphics.drawImage(bullet.getBullet_img(),bullet.getPos().getX(),bullet.getPos().getY());
+            }
+
+
+            //to remove bullets which hit stones ,bricks and tanks
+            ArrayList<Entity> all_objects=new ArrayList<>();
+            all_objects.addAll(bricks);
+            all_objects.addAll(stones);
+            all_objects.addAll(tanks);
+
+            if(!bulletpack.isEmpty()){
+                for (Entity e: all_objects){
+                    Rectangle r = new Rectangle(e.getX(),e.getY(),58,58);
+                    for (Bullet bullet : bulletpack) {
+                        if(bullet.is_active()){
+                            Rectangle p = new Rectangle(bullet.getX(),bullet.getY(),58,58);
+                            if(r.intersects(p)){
+                                bullet.setIs_active(false);
+                            }
+                        }
+                    }
+                }
+
+
+            }
         }
+
     }
 
     private Color chooseTankColour(int id){
@@ -163,6 +200,7 @@ public class SetUp extends BasicGame {
             Color color = chooseTankColour(tank.getId());
             img.draw(4 + 60 * (tank.getX()), 4 + 60 * (tank.getY()), color);
             addDataToTable(tank);
+
         }
 
         //to show health
