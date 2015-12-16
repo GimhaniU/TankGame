@@ -1,16 +1,10 @@
 package connection;
 
 import AI.Command;
-import AI.PathFinder;
-import GUI.WarGui;
-import Parser.Map;
+import AI.AIController;
 
-import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created by Gimhani on 10/26/2015.
@@ -63,9 +57,7 @@ public class MessageWriter extends Thread{
         */
         while(true) {
 
-            Random random = new Random();
-
-            int value = PathFinder.pathGenerator(messageReader.getMap());
+            int value = AIController.pathGenerator(messageReader.getMap());
             switch (value) {
                 case 1:
                     write(Command.UP);
