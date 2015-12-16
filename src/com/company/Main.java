@@ -32,7 +32,7 @@ public class Main {
             messageWriter.start();
 
             app.start();
-        } catch (SlickException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

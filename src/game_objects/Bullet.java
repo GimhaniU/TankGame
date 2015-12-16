@@ -13,8 +13,6 @@ public class Bullet extends Entity {
     private int id=0;
 
     private Vector2f pos;
-    private final Vector2f HOR_SPEED=new Vector2f(200,50);
-    private final Vector2f VER_SPEED=new Vector2f(550,200);
     private Vector2f speed=null;
     private boolean is_active=true;
     private  int direction;

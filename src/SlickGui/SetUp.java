@@ -70,7 +70,7 @@ public class SetUp extends BasicGame {
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException {
+    public void update(GameContainer gameContainer, int i) throws SlickException,ConcurrentModificationException {
         if (bulletpack != null) {
             for (Iterator<Bullet> b = bulletpack.iterator(); b.hasNext(); ) {
                 Bullet bullet = b.next();
@@ -81,7 +81,7 @@ public class SetUp extends BasicGame {
                 }
             }
         }
-        if(map.is_game_finished()){
+        if(map!=null && map.is_game_finished()){
             game_over_img.draw(200,200);
         }
     }
@@ -140,6 +140,7 @@ public class SetUp extends BasicGame {
                         //if tank is shooting
                         if (tank.isShot()) {
                             if (tank.getDirection() == 0 || tank.getDirection() == 2) {
+                                System.out.println("COORDINATES:"+tank.getX()+" "+tank.getY());
                                 bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_ver_img));
                             } else {
                                 bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_hor_img));
@@ -161,7 +162,8 @@ public class SetUp extends BasicGame {
                 //to move the already available bullets
                 for (Bullet bullet : bulletpack) {
                     if(bullet.is_active())
-                        graphics.drawImage(bullet.getBullet_img(), bullet.getPos().getX(), bullet.getPos().getY());
+                        bullet.getBullet_img().draw(24+60*bullet.getPos().getX(),24+60*bullet.getPos().getY());
+                     //   graphics.drawImage(bullet.getBullet_img(), bullet.getPos().getX(), bullet.getPos().getY());
                 }
 
 /*
@@ -173,13 +175,14 @@ public class SetUp extends BasicGame {
 
                 if (!bulletpack.isEmpty()) {
                     for (Entity e : all_objects) {
-                        Rectangle r = new Rectangle(e.getX(), e.getY(), 58, 58);
-                        for (Bullet bullet : bulletpack) {
+                        Rectangle r = new Rectangle(4+60*e.getX(), 4+60*e.getY(), 58, 58);
+                        for (Iterator<Bullet> it = bulletpack.iterator(); it.hasNext(); ) {
+                            Bullet bullet = it.next();
                             if (bullet.is_active()) {
-                                Rectangle p = new Rectangle(bullet.getX(), bullet.getY(), 58, 58);
+                                Rectangle p = new Rectangle(4+60*bullet.getX(), 4+60*bullet.getY(), 58, 58);
                                 if (r.intersects(p)) {
                                     bullet.setIs_active(false);
-                                    bulletpack.remove(bullet);
+                                    it.remove();
                                 }
                             }
                         }
