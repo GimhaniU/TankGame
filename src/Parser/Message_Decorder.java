@@ -1,9 +1,11 @@
 package Parser;
 
 import SlickGui.SetUp;
+import SlickGui.StateGame;
 import game_objects.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by Gimhani on 10/21/2015.
@@ -49,6 +51,7 @@ public class Message_Decorder {
                     switch (firstChar) {
                         case 'S':
                             processStartMessage(message);
+                            map.setIs_game_started(true);
                             break;
                         case 'I':
                             processInitializationMessage(message);
@@ -66,9 +69,11 @@ public class Message_Decorder {
                     break;
                 default:
                     String replyMessage = processReplyMessage(message);
+                    /*
                     if(grid!=null) {
                         grid.writeMessage(replyMessage);
                     }
+                    */
             }
         }
         return map;
@@ -78,6 +83,7 @@ public class Message_Decorder {
         if(message.equals("OBSTACLE;25#")){
             return "Obstacle ahead";
         }else if(message.equals("DEAD#")){
+            map.setIs_me_dead(true);
             return "You are dead";
         }else if(message.equals("INVALID_CELL#")){
             return "Can't go there";
@@ -88,6 +94,7 @@ public class Message_Decorder {
         }else if(message.equals("TOO_QUICK#")){
             return "Be slow";
         }else if(message.equals("GAME_HAS_FINISHED#") ){
+            map.setIs_game_finished(true);
             return "Game over";
         }else if(message.equals("GAME_FINISHED#") ){
             return "Game over for you";

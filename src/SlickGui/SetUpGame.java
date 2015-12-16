@@ -1,22 +1,24 @@
 package SlickGui;
 
-
 import Parser.Map;
 import game_objects.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
- * Created by Gimhani on 12/12/2015.
+ * Created by Nuwantha on 12/16/2015.
  */
+public class SetUpGame extends BasicGameState {
 
-public class SetUp extends BasicGame {
     private GameContainer gamecontainer = null;
     private Graphics graphics = null;
 
@@ -37,17 +39,18 @@ public class SetUp extends BasicGame {
     private Image stone_img = null;
     private Image bullet_hor_img = null;
     private Image bullet_ver_img = null;
-    private Image game_over_img = null;
 
     private ArrayList<Bullet> bulletpack = null;
-
-    public SetUp(String title) {
-        super(title);
+    private StateBasedGame stateBasedGame=null;
+    @Override
+    public int getID() {
+        return 0;
     }
 
     @Override
-    public void init(GameContainer gameContainer) throws SlickException {
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gamecontainer = gameContainer;
+        this.stateBasedGame=stateBasedGame;
 
         background = new Image("src/images/_original4.png");
         coin_img = new Image("src/images/coinpile.png");
@@ -64,13 +67,32 @@ public class SetUp extends BasicGame {
         stone_img = new Image("src/images/stone.png");
         bullet_hor_img = new Image("src/images/bullet-hor.png");
         bullet_ver_img = new Image("src/images/bullet-ver.png");
-        game_over_img = new Image("src/images/gameover.png");
 
         bulletpack = new ArrayList<>();
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+        this.gamecontainer = gameContainer;
+        this.stateBasedGame=stateBasedGame;
+
+        background = new Image("src/images/_original4.png");
+        coin_img = new Image("src/images/coinpile.png");
+        brick_img = new Image("src/images/brick.png");
+        brick_75_img = new Image("src/images/brick-75.png");
+        brick_50_img = new Image("src/images/brick-50.png");
+        brick_25_img = new Image("src/images/brick-25.png");
+        lifepack_img = new Image("src/images/lifepack.png");
+        tank_0_img = new Image("src/images/tank-0.png");
+        tank_1_img = new Image("src/images/tank-1.png");
+        tank_2_img = new Image("src/images/tank-2.png");
+        tank_3_img = new Image("src/images/tank-3.png");
+        water_img = new Image("src/images/water.jpg");
+        stone_img = new Image("src/images/stone.png");
+        bullet_hor_img = new Image("src/images/bullet-hor.png");
+        bullet_ver_img = new Image("src/images/bullet-ver.png");
+
+        bulletpack = new ArrayList<>();
         if (bulletpack != null) {
             for (Iterator<Bullet> b = bulletpack.iterator(); b.hasNext(); ) {
                 Bullet bullet = b.next();
@@ -81,18 +103,18 @@ public class SetUp extends BasicGame {
                 }
             }
         }
-        if(map.is_game_finished()){
-            game_over_img.draw(200,200);
+        if(map!=null && map.is_game_finished()){
+            stateBasedGame.enterState(1,new FadeInTransition(Color.gray),new FadeOutTransition(Color.darkGray));
         }
     }
 
     public void update(Map map) throws SlickException {
         this.map = map;
-        update(this.gamecontainer, 0);
+        update(this.gamecontainer,stateBasedGame, 0);
     }
 
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         try {
             this.graphics = graphics;
             background.draw(0, 0, 972, 648);
@@ -190,6 +212,7 @@ public class SetUp extends BasicGame {
         }
     }
 
+
     private Color chooseTankColour(int id) {
         switch (id) {
             case 0:
@@ -246,4 +269,5 @@ public class SetUp extends BasicGame {
             column += 90;
         }
     }
+
 }

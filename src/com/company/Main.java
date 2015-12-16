@@ -1,5 +1,7 @@
 package com.company;
 import SlickGui.SetUp;
+import SlickGui.SetUpGame;
+import SlickGui.StateGame;
 import connection.MessageReader;
 import connection.MessageWriter;
 import org.newdawn.slick.AppGameContainer;

@@ -1,30 +1,35 @@
 package SlickGui;
 
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * Created by Nuwantha on 12/16/2015.
  */
-public class GameOverState extends BasicGame {
-    public GameOverState(String title) {
-        super(title);
+public class GameOverState extends BasicGameState {
+
+    private Image background = null;
+
+    @Override
+    public int getID() {
+        return 1;
     }
 
     @Override
-    public void init(GameContainer gameContainer) throws SlickException {
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        background = new Image("src/images/game_over.png");
+    }
+
+    @Override
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException {
-
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        background.draw(0, 0, 972, 648);
     }
 
-    @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
 
-    }
 }

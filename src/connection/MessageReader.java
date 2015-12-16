@@ -3,6 +3,7 @@ package connection;
 import Parser.Map;
 import Parser.Message_Decorder;
 import SlickGui.SetUp;
+import SlickGui.StateGame;
 import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;

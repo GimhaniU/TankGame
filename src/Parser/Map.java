@@ -15,6 +15,9 @@ public class Map {
     private ArrayList<Coin_Pile> coinPiles;
     private ArrayList<Stone> stones;
     private ArrayList<Water> waters;
+    private boolean is_me_dead=false;
+    private boolean is_game_started=false;
+    private boolean is_game_finished=false;
 
     public Map() {
         tanks = new ArrayList<Tank>();
@@ -28,6 +31,29 @@ public class Map {
     }
 
 
+    public boolean is_me_dead() {
+        return is_me_dead;
+    }
+
+    public void setIs_me_dead(boolean is_me_dead) {
+        this.is_me_dead = is_me_dead;
+    }
+
+    public boolean is_game_started() {
+        return is_game_started;
+    }
+
+    public void setIs_game_started(boolean is_game_started) {
+        this.is_game_started = is_game_started;
+    }
+
+    public boolean is_game_finished() {
+        return is_game_finished;
+    }
+
+    public void setIs_game_finished(boolean is_game_finished) {
+        this.is_game_finished = is_game_finished;
+    }
 
     public ArrayList<Bullet> getBullets() {
         return bullets;
