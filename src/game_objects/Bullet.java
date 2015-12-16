@@ -15,7 +15,7 @@ public class Bullet extends Entity {
     private Vector2f pos;
     private final Vector2f HOR_SPEED=new Vector2f(200,50);
     private final Vector2f VER_SPEED=new Vector2f(550,200);
-    private Vector2f speed=new Vector2f(200,50);
+    private Vector2f speed=null;
     private boolean is_active=true;
     private  int direction;
     private Image bullet_img;
@@ -54,7 +54,17 @@ public class Bullet extends Entity {
         this.pos = init_pos;
         this.direction=direction;
         this.bullet_img=img;
+        this.speed=getSpeed(direction);
+    }
 
+    private Vector2f getSpeed(int direction){
+        switch (direction){
+            case 0: return new Vector2f(0,-200);
+            case 1: return new Vector2f(200,0);
+            case 2:return new Vector2f(0,200);
+            case 3: return new Vector2f(-200,0);
+        }
+        return new Vector2f(0,200);
     }
 
     //to update the position
