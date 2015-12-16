@@ -15,7 +15,7 @@ public class Bullet extends Entity {
     private Vector2f pos;
     private final Vector2f HOR_SPEED=new Vector2f(200,50);
     private final Vector2f VER_SPEED=new Vector2f(550,200);
-    private Vector2f speed=null;
+    private Vector2f speed=new Vector2f(200,50);
     private boolean is_active=true;
     private  int direction;
     private Image bullet_img;
@@ -61,7 +61,7 @@ public class Bullet extends Entity {
     public  void update(int t){
         if(is_active){
             Vector2f real_speed=speed.copy();
-            real_speed.scale(t / 1000);
+            real_speed.scale(t / 1000.0f);
             pos.add(real_speed);
             if(pos.getX()<0 || pos.getX()>972 || pos.getY()<0 || pos.getY()>648){
                 is_active=false;

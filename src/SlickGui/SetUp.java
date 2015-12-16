@@ -160,10 +160,11 @@ public class SetUp extends BasicGame {
 
                 //to move the already available bullets
                 for (Bullet bullet : bulletpack) {
-                    graphics.drawImage(bullet.getBullet_img(), bullet.getPos().getX(), bullet.getPos().getY());
+                    if(bullet.is_active())
+                        graphics.drawImage(bullet.getBullet_img(), bullet.getPos().getX(), bullet.getPos().getY());
                 }
 
-
+/*
                 //to remove bullets which hit stones ,bricks and tanks
                 ArrayList<Entity> all_objects = new ArrayList<>();
                 all_objects.addAll(bricks);
@@ -183,7 +184,7 @@ public class SetUp extends BasicGame {
                             }
                         }
                     }
-                }
+                }*/
             }
         } catch (ConcurrentModificationException e) {
 
