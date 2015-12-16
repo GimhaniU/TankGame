@@ -69,10 +69,11 @@ public class Bullet extends Entity {
     public  void update(int t){
         if(is_active){
             Vector2f real_speed=speed.copy();
-            real_speed.scale(t / 1000.0f);
+            real_speed.scale(t / 200.0f);
             pos.add(real_speed);
             if(pos.getX()<0 || pos.getX()>972 || pos.getY()<0 || pos.getY()>648){
                 is_active=false;
+
             }
         }
     }

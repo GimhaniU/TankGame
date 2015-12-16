@@ -76,8 +76,8 @@ public class SetUp extends BasicGame {
                 Bullet bullet = b.next();
                 if (bullet.is_active()) {
                     bullet.update(i);
-                } else {
-                    b.remove();
+                } else {bullet.setIs_active(false);
+                   // b.remove();
                 }
             }
         }
