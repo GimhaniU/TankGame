@@ -96,7 +96,6 @@ public class Bullet extends Entity {
 
     @Override
     public int getId() {
-
         return id;
     }
 

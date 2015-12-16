@@ -75,7 +75,7 @@ public class SetUp extends BasicGame {
                 if (bullet.is_active()) {
                     bullet.update(i);
                 } else {
-                    bulletpack.remove(b);
+                    b.remove();
                 }
             }
         }
@@ -141,7 +141,6 @@ public class SetUp extends BasicGame {
                             }
                         }
                     }
-
                 }
 
                 ArrayList<Coin_Pile> coin_piles = map.getCoinPiles();
@@ -179,8 +178,6 @@ public class SetUp extends BasicGame {
                             }
                         }
                     }
-
-
                 }
             }
         } catch (ConcurrentModificationException e) {
@@ -213,7 +210,6 @@ public class SetUp extends BasicGame {
             Color color = chooseTankColour(tank.getId());
             img.draw(4 + 60 * (tank.getX()), 4 + 60 * (tank.getY()), color);
             addDataToTable(tank);
-
         }
 
         //to show health
@@ -222,6 +218,10 @@ public class SetUp extends BasicGame {
             graphics.drawString(String.valueOf(healthEntity.getHealth()) + "%", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
         }
 
+        if( entity.getEnType()==Entity_Type.CoinPile){
+            Coin_Pile coin_pile=(Coin_Pile)entity;
+            graphics.drawString(String.valueOf(coin_pile.getValue()) + "$", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
+        }
     }
 
     public void writeMessage(String message) {
@@ -234,11 +234,11 @@ public class SetUp extends BasicGame {
 
     private void addDataToTable(Tank tank) {
         int row = 405 + tank.getId() * 35;
-        String[] valueArray = new String[]{"P" + tank.getId(), String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
-        int column = 640;
+        String[] valueArray = new String[]{ String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
+        int column = 720;
         for (String cellValue : valueArray) {
             graphics.drawString(cellValue, column, row);
-            column += 100;
+            column += 90;
         }
     }
 }
