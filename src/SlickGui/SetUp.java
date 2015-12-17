@@ -40,6 +40,7 @@ public class SetUp extends BasicGame {
     private Image game_over_img = null;
 
     private ArrayList<Bullet> bulletpack = null;
+    private ArrayList<String[]> tank_points = null;
 
     public SetUp(String title) {
         super(title);
@@ -67,22 +68,25 @@ public class SetUp extends BasicGame {
         game_over_img = new Image("src/images/gameover.png");
 
         bulletpack = new ArrayList<>();
+        tank_points = new ArrayList<>();
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException,ConcurrentModificationException {
+    public void update(GameContainer gameContainer, int i) throws SlickException, ConcurrentModificationException {
+
         if (bulletpack != null) {
             for (Iterator<Bullet> b = bulletpack.iterator(); b.hasNext(); ) {
                 Bullet bullet = b.next();
                 if (bullet.is_active()) {
                     bullet.update(i);
-                } else {bullet.setIs_active(false);
-                   // b.remove();
+                } else {
+                    bullet.setIs_active(false);
+                    b.remove();
                 }
             }
         }
-        if(map!=null && map.is_game_finished()){
-            game_over_img.draw(200,200);
+        if (map != null && map.is_game_finished()) {
+            game_over_img.draw(200, 200);
         }
     }
 
@@ -140,7 +144,7 @@ public class SetUp extends BasicGame {
                         //if tank is shooting
                         if (tank.isShot()) {
                             if (tank.getDirection() == 0 || tank.getDirection() == 2) {
-                                System.out.println("COORDINATES:"+tank.getX()+" "+tank.getY());
+                                System.out.println("COORDINATES:" + tank.getX() + " " + tank.getY());
                                 bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_ver_img));
                             } else {
                                 bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_hor_img));
@@ -161,12 +165,12 @@ public class SetUp extends BasicGame {
 
                 //to move the already available bullets
                 for (Bullet bullet : bulletpack) {
-                    if(bullet.is_active())
-                        bullet.getBullet_img().draw(24+60*bullet.getPos().getX(),24+60*bullet.getPos().getY());
-                     //   graphics.drawImage(bullet.getBullet_img(), bullet.getPos().getX(), bullet.getPos().getY());
+                    if (bullet.is_active())
+                        bullet.getBullet_img().draw(14 + 60 * bullet.getPos().getX(), 14 + 60 * bullet.getPos().getY());
+                    //   graphics.drawImage(bullet.getBullet_img(), bullet.getPos().getX(), bullet.getPos().getY());
                 }
 
-/*
+
                 //to remove bullets which hit stones ,bricks and tanks
                 ArrayList<Entity> all_objects = new ArrayList<>();
                 all_objects.addAll(bricks);
@@ -175,11 +179,11 @@ public class SetUp extends BasicGame {
 
                 if (!bulletpack.isEmpty()) {
                     for (Entity e : all_objects) {
-                        Rectangle r = new Rectangle(4+60*e.getX(), 4+60*e.getY(), 58, 58);
+                        Rectangle r = new Rectangle(4 + 60 * e.getX(), 4 + 60 * e.getY(), 58, 58);
                         for (Iterator<Bullet> it = bulletpack.iterator(); it.hasNext(); ) {
                             Bullet bullet = it.next();
                             if (bullet.is_active()) {
-                                Rectangle p = new Rectangle(4+60*bullet.getX(), 4+60*bullet.getY(), 58, 58);
+                                Rectangle p = new Rectangle(4 + 60 * bullet.getX(), 4 + 60 * bullet.getY(), 58, 58);
                                 if (r.intersects(p)) {
                                     bullet.setIs_active(false);
                                     it.remove();
@@ -187,8 +191,9 @@ public class SetUp extends BasicGame {
                             }
                         }
                     }
-                }*/
+                }
             }
+            addDataToTable();
         } catch (ConcurrentModificationException e) {
 
         }
@@ -227,8 +232,8 @@ public class SetUp extends BasicGame {
             graphics.drawString(String.valueOf(healthEntity.getHealth()) + "%", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
         }
 
-        if( entity.getEnType()==Entity_Type.CoinPile){
-            Coin_Pile coin_pile=(Coin_Pile)entity;
+        if (entity.getEnType() == Entity_Type.CoinPile) {
+            Coin_Pile coin_pile = (Coin_Pile) entity;
             graphics.drawString(String.valueOf(coin_pile.getValue()) + "$", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
         }
     }
@@ -243,11 +248,33 @@ public class SetUp extends BasicGame {
 
     private void addDataToTable(Tank tank) {
         int row = 405 + tank.getId() * 35;
-        String[] valueArray = new String[]{ String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
+        String[] valueArray = new String[]{String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
+
         int column = 720;
         for (String cellValue : valueArray) {
             graphics.drawString(cellValue, column, row);
             column += 90;
         }
+        if (tank.getHealth() == 0) {
+            String[] tank_mark = new String[]{String.valueOf(tank.getId()), String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
+            tank_points.add(tank_mark);
+        }
+    }
+
+    private void addDataToTable(){
+        if (tank_points != null) {
+            for (String[] tank_point : tank_points) {
+                int row = 405 + Integer.parseInt(tank_point[0]) * 35;
+                String[]valueArray = new String[]{tank_point[1], tank_point[2], tank_point[3]};
+                int column = 720;
+                for (String cellValue : valueArray) {
+                    graphics.drawString(cellValue, column, row);
+                    column += 90;
+                }
+
+            }
+        }
+
+
     }
 }
