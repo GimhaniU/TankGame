@@ -32,6 +32,8 @@ public class AIController {
 
 
             //use to select position of target
+
+            //mean selected target coordinates
             int newX=100;
             int newY=100;
             boolean move=false;
@@ -70,7 +72,7 @@ public class AIController {
                        }
 
                 }
-                moveChooser moveChooser=new moveChooser(AIController.map,AIController.mytank);
+                MoveChooser moveChooser=new MoveChooser(AIController.map,AIController.mytank);
                 return moveChooser.shortestPathCalculator(x, y, newX, newY, 1);
 
             }else {

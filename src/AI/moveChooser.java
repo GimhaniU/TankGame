@@ -6,7 +6,7 @@ import game_objects.Stone;
 import game_objects.Tank;
 import game_objects.Water;
 
-public class moveChooser {
+public class MoveChooser {
 
      int [][] memory =new int[10][10];
      Map map=null;
@@ -15,7 +15,7 @@ public class moveChooser {
      int  times=20;
 
     //update move chooser variable
-    public moveChooser(Map updateMap, Tank updateMyTank){
+    public MoveChooser(Map updateMap, Tank updateMyTank){
         memory =new int[10][10];
         map=updateMap;
         myTank=updateMyTank;
@@ -54,7 +54,6 @@ public class moveChooser {
 
                 //first call of the recursive tree
             if (numberOfTimes == 1) {
-
 
                 if (value1 < value2 && value1 < value3 && value1 < value4) {
                     if(memory[x+1][y]==3 && myTank.getDirection()==1){

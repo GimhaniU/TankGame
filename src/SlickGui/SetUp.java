@@ -64,20 +64,24 @@ public class SetUp extends BasicGame {
         stone_img = new Image("src/images/stone.png");
         bullet_hor_img = new Image("src/images/bullet-hor.png");
         bullet_ver_img = new Image("src/images/bullet-ver.png");
-        game_over_img = new Image("src/images/gameover.png");
+        game_over_img = new Image("src/images/stone.png");
 
         bulletpack = new ArrayList<>();
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        if (bulletpack != null) {
-            for (Iterator<Bullet> b = bulletpack.iterator(); b.hasNext(); ) {
-                Bullet bullet = b.next();
-                if (bullet.is_active()) {
-                    bullet.update(i);
-                } else {
-                    b.remove();
+        synchronized (this) {
+            ArrayList<Bullet> bpacklocal = bulletpack;
+            if (bpacklocal != null) {
+                for (Iterator<Bullet> b = bpacklocal.iterator(); b.hasNext(); ) {
+                    Bullet bullet = b.next();
+                    if (bullet.is_active()) {
+                        bullet.update(i);
+                    } else {
+                        b.remove();
+                    //    bpacklocal.remove(bullet);
+                    }
                 }
             }
         }
@@ -146,6 +150,7 @@ public class SetUp extends BasicGame {
                             }
                         }
                     }
+                    addDataToTable(tank);
                 }
 
                 ArrayList<Coin_Pile> coin_piles = map.getCoinPiles();
@@ -161,7 +166,7 @@ public class SetUp extends BasicGame {
                 //to move the already available bullets
                 for (Bullet bullet : bulletpack) {
                     if(bullet.is_active())
-                        graphics.drawImage(bullet.getBullet_img(), bullet.getPos().getX(), bullet.getPos().getY());
+                        graphics.drawImage(bullet.getBullet_img(),4+60* bullet.getPos().getX(), 4+60*bullet.getPos().getY());
                 }
 
 /*
@@ -215,7 +220,7 @@ public class SetUp extends BasicGame {
             Tank tank = (Tank) entity;
             Color color = chooseTankColour(tank.getId());
             img.draw(4 + 60 * (tank.getX()), 4 + 60 * (tank.getY()), color);
-            addDataToTable(tank);
+            //addDataToTable(tank);
         }
 
         //to show health
