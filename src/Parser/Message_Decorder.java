@@ -294,6 +294,9 @@ public class Message_Decorder {
             tanks.add(tank);
 
 
+
+
+
             //removing coin piles or life pack when tank get that coin or life pack
             ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
             ArrayList<Coin_Pile> tem_coinPiles=new ArrayList();

@@ -8,10 +8,10 @@ import game_objects.*;
  */
 public class AIController {
 
+
     static Tank mytank=null;
     static int [][] memory =new int[10][10];
     static Map map=null;
-
     public static int pathGenerator(Map map){
 
         AIController.map =map;

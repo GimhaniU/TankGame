@@ -40,13 +40,21 @@ public class MoveChooser {
             }
             //if tank not move to target get next movement
             //move right
-            int value1 =shortestPathCalculator(x + 1, y, x1, y1, numberOfTimes + 1);
+
+            int newNumberOfTimes=numberOfTimes;
+            if(memory[x][y]==3){
+                newNumberOfTimes+=5;
+            }else{
+                newNumberOfTimes+=1;
+            }
+
+            int  value1 = shortestPathCalculator(x + 1, y, x1, y1, newNumberOfTimes);
             //move down
-            int value2 = shortestPathCalculator(x, y + 1, x1, y1, numberOfTimes + 1);
+            int value2 = shortestPathCalculator(x, y + 1, x1, y1, newNumberOfTimes);
             //move left
-            int value3 = shortestPathCalculator(x - 1, y, x1, y1, numberOfTimes + 1);
+            int value3 = shortestPathCalculator(x - 1, y, x1, y1, newNumberOfTimes);
             //move up
-            int value4 = shortestPathCalculator(x, y - 1, x1, y1, numberOfTimes + 1);
+            int value4 = shortestPathCalculator(x, y - 1, x1, y1, newNumberOfTimes);
 
             // find min value.that mean find shortest path if we get this movement
 
@@ -54,6 +62,8 @@ public class MoveChooser {
 
                 //first call of the recursive tree
             if (numberOfTimes == 1) {
+
+
 
                 if (value1 < value2 && value1 < value3 && value1 < value4) {
                     if(memory[x+1][y]==3 && myTank.getDirection()==1){
@@ -94,9 +104,6 @@ public class MoveChooser {
         return 20;
 
     }
-
-
-
 
 }
 
