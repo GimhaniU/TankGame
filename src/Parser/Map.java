@@ -18,6 +18,7 @@ public class Map {
     private boolean is_me_dead=false;
     private boolean is_game_started=false;
     private boolean is_game_finished=false;
+    private ArrayList<Integer>  deadTanks;
 
     public Map() {
         tanks = new ArrayList<Tank>();
@@ -27,7 +28,17 @@ public class Map {
         stones = new ArrayList<Stone>();
         waters = new ArrayList<Water>();
         bullets = new ArrayList<Bullet>();
+        deadTanks=new ArrayList<Integer>();
 
+    }
+
+
+    public ArrayList<Integer> getDeadTanks() {
+        return deadTanks;
+    }
+
+    public void setDeadTanks(ArrayList<Integer> deadTanks) {
+        this.deadTanks =deadTanks;
     }
 
 
@@ -133,11 +144,14 @@ public class Map {
         ArrayList<Coin_Pile> tem_coin_piles = new ArrayList<>();
         for (int i=0;i<coinPiles.size();i++){
             Coin_Pile coin_pile = coinPiles.get(i);
-            //System.out.println("starttime :"+coin_pile.getStartTime() );
-            if((current_time-coin_pile.getStartTime())<coin_pile.getLifeTime()){
+            //System.out.println("starttime :"+coin_pile.getStartTime());
+            if(coin_pile.getLifeTime()!=0) {
+                if ((current_time - coin_pile.getStartTime()) < coin_pile.getLifeTime()) {
+                    tem_coin_piles.add(coin_pile);
+                }
+            }else{
                 tem_coin_piles.add(coin_pile);
             }
-
         }
 
         coinPiles=tem_coin_piles;

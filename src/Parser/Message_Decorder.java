@@ -295,49 +295,61 @@ public class Message_Decorder {
 
             //add a coinpiles when player dead
 
-            if(is_shot && health==4){
+            boolean deadNow=true;
 
-                Coin_Pile coinPile = new Coin_Pile();
+            if(health==0){
+                ArrayList<Integer> deadTanks = map.getDeadTanks();
+                for (int id :deadTanks) {
+                    if(id==playerID){
+                        deadNow=false;
+                        break;
+                    }
+                }
+                if(deadNow) {
+                    System.err.println("dead now");
+                    deadTanks.add(playerID);
+                    map.setDeadTanks(deadTanks);
+                    Coin_Pile coinPile = new Coin_Pile();
 
-                coinPile.setX(x);//get x coordinates of points
-                coinPile.setY(y);//get y coordinates of points
+                    coinPile.setX(x);//get x coordinates of points
+                    coinPile.setY(y);//get y coordinates of points
 
 
-                coinPile.setLifeTime(Integer.MAX_VALUE);
-                coinPile.setValue(coins);
-                coinPile.setStartTime(System.currentTimeMillis());
+                    coinPile.setLifeTime(0);
+                    coinPile.setValue(coins);
+                    coinPile.setStartTime(System.currentTimeMillis());
 
-                ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
-                coinPiles.add(coinPile);
-                map.setCoinPiles(coinPiles);
-
+                    ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
+                    coinPiles.add(coinPile);
+                    map.setCoinPiles(coinPiles);
+                }
             }
+
 
 
 
             //removing coin piles or life pack when tank get that coin or life pack
-            ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
-            ArrayList<Coin_Pile> tem_coinPiles=new ArrayList();
-            for(Coin_Pile coin_pile:coinPiles){
-                if(!(coin_pile.getX()==x && coin_pile.getY()==y))
-                {
-                    tem_coinPiles.add(coin_pile);
+            if(health !=0) {
+                ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
+                ArrayList<Coin_Pile> tem_coinPiles = new ArrayList();
+                for (Coin_Pile coin_pile : coinPiles) {
+                    if (!(coin_pile.getX() == x && coin_pile.getY() == y)) {
+                        tem_coinPiles.add(coin_pile);
+                    }
+
                 }
+                map.setCoinPiles(tem_coinPiles);
 
-            }
-            map.setCoinPiles(tem_coinPiles);
+                ArrayList<Life_Pack> life_packs = map.getLifePacks();
+                ArrayList<Life_Pack> tem_life_packs = new ArrayList();
+                for (Life_Pack life_pack : life_packs) {
+                    if (!(life_pack.getX() == x && life_pack.getY() == y)) {
+                        tem_life_packs.add(life_pack);
+                    }
 
-            ArrayList<Life_Pack> life_packs = map.getLifePacks();
-            ArrayList<Life_Pack> tem_life_packs=new ArrayList();
-            for(Life_Pack life_pack:life_packs){
-                if(!(life_pack.getX()==x && life_pack.getY()==y))
-                {
-                    tem_life_packs.add(life_pack);
                 }
-
+                map.setLifePacks(tem_life_packs);
             }
-            map.setLifePacks(tem_life_packs);
-
         }
         map.setTanks(tanks);
     }
