@@ -17,11 +17,11 @@ import java.util.logging.Logger;
  */
 public class Connection {
     static Connection connection;
-    Socket client=null;
+    Socket client = null;
 
     //using Singleton to create the connection
-    public static Connection getInstance(){
-        if(connection ==null){
+    public static Connection getInstance() {
+        if (connection == null) {
             connection = new Connection();
             try {
                 connection.client = new Socket("127.0.0.1", 6000);
@@ -29,53 +29,37 @@ public class Connection {
                 e.printStackTrace();
             }
             return connection;
-        }else{
+        } else {
             connection.createsocket();
             return connection;
         }
 
     }
-    public void createsocket(){
-        if(client.isClosed()){
-            try {
-                connection.client = new Socket("127.0.0.1", 6000);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
     //to send messages to server
-    public void sendMessage(String message){
+    public void sendMessage(String message) {
 
-        DataOutputStream out=null;
+        DataOutputStream out = null;
         try {
 
             createsocket();
-           // client = new Socket("127.0.0.1", 6000);
+
             out = new DataOutputStream(client.getOutputStream());
             out.writeBytes(message);
 
         } catch (UnknownHostException ex) {
-            System.out.println("Exception: \n "+Connection.class.getName()+"\n"+ex+"\n");
+            System.out.println("Exception: \n " + Connection.class.getName() + "\n" + ex + "\n");
             ex.printStackTrace();
         } catch (IOException ex) {
 
-            System.out.println("Exception: \n "+Connection.class.getName()+"\n"+ex);
+            System.out.println("Exception: \n " + Connection.class.getName() + "\n" + ex);
             ex.printStackTrace();
-        } catch(Exception e){
-            System.out.println("Runtime Exceptions:"+e);
-        }finally{
+        } catch (Exception e) {
+            System.out.println("Runtime Exceptions:" + e);
+        } finally {
             IOUtils.closeQuietly(client);
             IOUtils.closeQuietly(out);
-
-            /*
-            try {
-                client.close();
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
 
         }
 
@@ -85,23 +69,23 @@ public class Connection {
 
     //this method blocks until msg receives.Use time outs.
 
-    public String getUpdates(){
+    public String getUpdates() {
 
         String update;
-        ServerSocket serverReader=null ;
-        Socket clientReader=null;
-        InputStreamReader socketReader=null;
+        ServerSocket serverReader = null;
+        Socket clientReader = null;
+        InputStreamReader socketReader = null;
         try {
             serverReader = new ServerSocket(7000);
             clientReader = serverReader.accept();
             socketReader = new InputStreamReader(clientReader.getInputStream());
             BufferedReader input = new BufferedReader(socketReader);
-            update= input.readLine();
+            update = input.readLine();
             return update;
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             return "Error reading from the socket";
-        }finally{
+        } finally {
             IOUtils.closeQuietly(clientReader);
             IOUtils.closeQuietly(serverReader);
             IOUtils.closeQuietly(socketReader);
@@ -120,6 +104,16 @@ public class Connection {
 
     }
 
+    //if socket is closed to create the socket
+    public void createsocket() {
+        if (client.isClosed()) {
+            try {
+                connection.client = new Socket("127.0.0.1", 6000);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

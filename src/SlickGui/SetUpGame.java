@@ -41,7 +41,8 @@ public class SetUpGame extends BasicGameState {
     private Image bullet_ver_img = null;
 
     private ArrayList<Bullet> bulletpack = null;
-    private StateBasedGame stateBasedGame=null;
+    private StateBasedGame stateBasedGame = null;
+
     @Override
     public int getID() {
         return 0;
@@ -50,7 +51,7 @@ public class SetUpGame extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gamecontainer = gameContainer;
-        this.stateBasedGame=stateBasedGame;
+        this.stateBasedGame = stateBasedGame;
 
         background = new Image("src/images/_original4.png");
         coin_img = new Image("src/images/coinpile.png");
@@ -74,7 +75,7 @@ public class SetUpGame extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         this.gamecontainer = gameContainer;
-        this.stateBasedGame=stateBasedGame;
+        this.stateBasedGame = stateBasedGame;
 
         background = new Image("src/images/_original4.png");
         coin_img = new Image("src/images/coinpile.png");
@@ -103,14 +104,14 @@ public class SetUpGame extends BasicGameState {
                 }
             }
         }
-        if(map!=null && map.is_game_finished()){
-            stateBasedGame.enterState(1,new FadeInTransition(Color.gray),new FadeOutTransition(Color.darkGray));
+        if (map != null && map.is_game_finished()) {
+            stateBasedGame.enterState(1, new FadeInTransition(Color.gray), new FadeOutTransition(Color.darkGray));
         }
     }
 
     public void update(Map map) throws SlickException {
         this.map = map;
-        update(this.gamecontainer,stateBasedGame, 0);
+        update(this.gamecontainer, stateBasedGame, 0);
     }
 
     @Override
@@ -246,8 +247,8 @@ public class SetUpGame extends BasicGameState {
             graphics.drawString(String.valueOf(healthEntity.getHealth()) + "%", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
         }
 
-        if( entity.getEnType()==Entity_Type.CoinPile){
-            Coin_Pile coin_pile=(Coin_Pile)entity;
+        if (entity.getEnType() == Entity_Type.CoinPile) {
+            Coin_Pile coin_pile = (Coin_Pile) entity;
             graphics.drawString(String.valueOf(coin_pile.getValue()) + "$", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
         }
     }
@@ -262,7 +263,7 @@ public class SetUpGame extends BasicGameState {
 
     private void addDataToTable(Tank tank) {
         int row = 405 + tank.getId() * 35;
-        String[] valueArray = new String[]{ String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
+        String[] valueArray = new String[]{String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
         int column = 720;
         for (String cellValue : valueArray) {
             graphics.drawString(cellValue, column, row);

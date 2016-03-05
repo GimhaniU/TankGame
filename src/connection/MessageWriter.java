@@ -9,34 +9,34 @@ import java.util.Random;
 /**
  * Created by Gimhani on 10/26/2015.
  */
-public class MessageWriter extends Thread{
-   // private  WarGui warGui=null;
-    ArrayList<String> message_list =new ArrayList();
+public class MessageWriter extends Thread {
+    // private  WarGui warGui=null;
+    ArrayList<String> message_list = new ArrayList();
     String message;
     Connection conn;
     MessageReader messageReader;
 
-    public MessageWriter(MessageReader messageReader){
-       this.messageReader=messageReader;
-   }
+    public MessageWriter(MessageReader messageReader) {
+        this.messageReader = messageReader;
+    }
 
-    public void write(Command command){
+    public void write(Command command) {
 
-        conn=Connection.getInstance();
-        if(command == command.UP){
-            message=("UP#");
-        }else if(command == command.DOWN){
-            message=("DOWN#");
-        }else if(command == command.RIGHT){
+        conn = Connection.getInstance();
+        if (command == command.UP) {
+            message = ("UP#");
+        } else if (command == command.DOWN) {
+            message = ("DOWN#");
+        } else if (command == command.RIGHT) {
 
-            message=("RIGHT#");
-        }else if(command == command.LEFT){
-            message=("LEFT#");
-        }else if(command == command.SHOOT){
-            message=("SHOOT#");
+            message = ("RIGHT#");
+        } else if (command == command.LEFT) {
+            message = ("LEFT#");
+        } else if (command == command.SHOOT) {
+            message = ("SHOOT#");
         }
         conn.sendMessage(message);
-        if(message_list!=null) {
+        if (message_list != null) {
             message_list.add(message);
         }
 
@@ -55,7 +55,7 @@ public class MessageWriter extends Thread{
         });
 
         */
-        while(true) {
+        while (true) {
 
             int value = AIController.pathGenerator(messageReader.getMap());
             switch (value) {

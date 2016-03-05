@@ -11,16 +11,21 @@ public class Brick extends Health_Entity {
 
     @Override
     public void setHealth(int health) {
-        switch (health){
-            case 0: super.health=100;
+        switch (health) {
+            case 0:
+                super.health = 100;
                 break;
-            case 1: super.health=75;
+            case 1:
+                super.health = 75;
                 break;
-            case 2: super.health=50;
+            case 2:
+                super.health = 50;
                 break;
-            case 3: super.health=25;
+            case 3:
+                super.health = 25;
                 break;
-            case 5: super.health=0;
+            case 5:
+                super.health = 0;
 
                 break;
         }

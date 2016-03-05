@@ -11,7 +11,6 @@ public class Health_Entity extends Entity {
     }
 
 
-
     public void setHealth(int health) {
         this.health = health;
     }

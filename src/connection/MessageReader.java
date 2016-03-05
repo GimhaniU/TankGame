@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * Created by Nuwantha on 10/21/2015.
  */
 public class MessageReader extends Thread {
-    Map map=new Map();
+    Map map = new Map();
     SetUp grid;
     Connection conn;
     ArrayList<String> messagelist;
     //MessageWriter messageWriter=new MessageWriter();
-   public boolean start=false;
+    public boolean start = false;
 
-    public Map getMap(){
+    public Map getMap() {
         return map;
     }
 
@@ -27,8 +27,8 @@ public class MessageReader extends Thread {
     public MessageReader(SetUp grid) {
 
         conn = Connection.getInstance();
-        messagelist=new ArrayList<>();
-        this.grid=grid;
+        messagelist = new ArrayList<>();
+        this.grid = grid;
         conn.sendMessage("JOIN#");
 
     }
@@ -36,9 +36,9 @@ public class MessageReader extends Thread {
     // we use this code to get server messages
     public void listen() throws SlickException {
 
-        Message_Decorder decode = new Message_Decorder(map,grid);
+        Message_Decorder decode = new Message_Decorder(map, grid);
 
-        while(true){
+        while (true) {
 
             //get server message
             String server_message = conn.getUpdates();
@@ -63,7 +63,7 @@ public class MessageReader extends Thread {
                 }
 
                 messagelist.add(server_message);
-                if(map.getTanks().size()>0){
+                if (map.getTanks().size() > 0) {
 
                 }
 

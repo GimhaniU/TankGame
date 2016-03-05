@@ -22,12 +22,12 @@ public class Message_Decorder {
 
     public Message_Decorder(Map map, SetUp grid) {
         this.map = map;
-        this.grid=grid;
+        this.grid = grid;
 
     }
 
     public void setGrid(SetUp grid) {
-        this.grid=grid;
+        this.grid = grid;
     }
 
 
@@ -40,13 +40,12 @@ public class Message_Decorder {
     }
 
 
-
     public Map process(String message) {
         if (message.length() > 2) {
             char firstChar = message.charAt(0);
             char secondChar = message.charAt(1);
             //System.out.println(firstChar);
-            switch (secondChar){
+            switch (secondChar) {
                 case ':':
                     switch (firstChar) {
                         case 'S':
@@ -80,27 +79,27 @@ public class Message_Decorder {
     }
 
     private String processReplyMessage(String message) {
-        if(message.equals("OBSTACLE;25#")){
+        if (message.equals("OBSTACLE;25#")) {
             return "Obstacle ahead";
-        }else if(message.equals("DEAD#")){
+        } else if (message.equals("DEAD#")) {
             map.setIs_me_dead(true);
             return "You are dead";
-        }else if(message.equals("INVALID_CELL#")){
+        } else if (message.equals("INVALID_CELL#")) {
             return "Can't go there";
-        }else if(message.equals("GAME_NOT_STARTED_YET#")){
+        } else if (message.equals("GAME_NOT_STARTED_YET#")) {
             return "Wait. game is not started yet";
-        }else if(message.equals("CELL_OCCUPIED#")){
+        } else if (message.equals("CELL_OCCUPIED#")) {
             return "Cell is already occupied";
-        }else if(message.equals("TOO_QUICK#")){
+        } else if (message.equals("TOO_QUICK#")) {
             return "Be slow";
-        }else if(message.equals("GAME_HAS_FINISHED#") ){
+        } else if (message.equals("GAME_HAS_FINISHED#")) {
             map.setIs_game_finished(true);
             return "Game over";
-        }else if(message.equals("GAME_FINISHED#") ){
+        } else if (message.equals("GAME_FINISHED#")) {
             return "Game over for you";
-        } else if(message.equals("NOT_A_VALID_CONTESTANT#")){
+        } else if (message.equals("NOT_A_VALID_CONTESTANT#")) {
             return "You are not a player";
-        }else if(message.equals("PITFALL#")){
+        } else if (message.equals("PITFALL#")) {
             return "You fall into water--dead";
         }
         return message;
@@ -196,7 +195,7 @@ public class Message_Decorder {
 
     //process G:... message
     private void processGameUpdateMessage(String message) {
-        message=message.substring(0,message.length()-2);
+        message = message.substring(0, message.length() - 2);
         String[] messages = message.split(":");
         ArrayList<String> players = new ArrayList();
 
@@ -218,12 +217,12 @@ public class Message_Decorder {
             Brick brick = new Brick();
             brick.setX(Integer.parseInt(String.valueOf(coordinates[i].charAt(0))));//get x coordinates of points
             brick.setY(Integer.parseInt(String.valueOf(coordinates[i].charAt(2))));//get y coordinates of points
-            int health=0;
+            int health = 0;
             if (coordinates[i].length() > 4) {
-               health= Integer.parseInt(coordinates[i].substring(4));
+                health = Integer.parseInt(coordinates[i].substring(4));
             }
             brick.setHealth(health);
-            if(health!=4) {
+            if (health != 4) {
                 bricks.add(brick);
             }
         }
@@ -295,17 +294,17 @@ public class Message_Decorder {
 
             //add a coinpiles when player dead
 
-            boolean deadNow=true;
+            boolean deadNow = true;
 
-            if(health==0){
+            if (health == 0) {
                 ArrayList<Integer> deadTanks = map.getDeadTanks();
-                for (int id :deadTanks) {
-                    if(id==playerID){
-                        deadNow=false;
+                for (int id : deadTanks) {
+                    if (id == playerID) {
+                        deadNow = false;
                         break;
                     }
                 }
-                if(deadNow) {
+                if (deadNow) {
                     System.err.println("dead now");
                     deadTanks.add(playerID);
                     map.setDeadTanks(deadTanks);
@@ -326,7 +325,7 @@ public class Message_Decorder {
             }
 
             //removing coin piles or life pack when tank get that coin or life pack
-            if(health !=0) {
+            if (health != 0) {
                 ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
                 ArrayList<Coin_Pile> tem_coinPiles = new ArrayList();
                 for (Coin_Pile coin_pile : coinPiles) {

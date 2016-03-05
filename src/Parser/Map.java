@@ -15,10 +15,10 @@ public class Map {
     private ArrayList<Coin_Pile> coinPiles;
     private ArrayList<Stone> stones;
     private ArrayList<Water> waters;
-    private boolean is_me_dead=false;
-    private boolean is_game_started=false;
-    private boolean is_game_finished=false;
-    private ArrayList<Integer>  deadTanks;
+    private boolean is_me_dead = false;
+    private boolean is_game_started = false;
+    private boolean is_game_finished = false;
+    private ArrayList<Integer> deadTanks;
 
     public Map() {
         tanks = new ArrayList<Tank>();
@@ -28,7 +28,7 @@ public class Map {
         stones = new ArrayList<Stone>();
         waters = new ArrayList<Water>();
         bullets = new ArrayList<Bullet>();
-        deadTanks=new ArrayList<Integer>();
+        deadTanks = new ArrayList<Integer>();
 
     }
 
@@ -38,7 +38,7 @@ public class Map {
     }
 
     public void setDeadTanks(ArrayList<Integer> deadTanks) {
-        this.deadTanks =deadTanks;
+        this.deadTanks = deadTanks;
     }
 
 
@@ -142,30 +142,30 @@ public class Map {
 
 
         ArrayList<Coin_Pile> tem_coin_piles = new ArrayList<>();
-        for (int i=0;i<coinPiles.size();i++){
+        for (int i = 0; i < coinPiles.size(); i++) {
             Coin_Pile coin_pile = coinPiles.get(i);
             //System.out.println("starttime :"+coin_pile.getStartTime());
-            if(coin_pile.getLifeTime()!=0) {
+            if (coin_pile.getLifeTime() != 0) {
                 if ((current_time - coin_pile.getStartTime()) < coin_pile.getLifeTime()) {
                     tem_coin_piles.add(coin_pile);
                 }
-            }else{
+            } else {
                 tem_coin_piles.add(coin_pile);
             }
         }
 
-        coinPiles=tem_coin_piles;
+        coinPiles = tem_coin_piles;
 
         ArrayList<Life_Pack> tem_life_pack = new ArrayList<>();
-        for (int i=0;i<lifePacks.size();i++){
+        for (int i = 0; i < lifePacks.size(); i++) {
             Life_Pack life_pack = lifePacks.get(i);
-            if((current_time-life_pack.getStartTime())<life_pack.getLifeTime()){
+            if ((current_time - life_pack.getStartTime()) < life_pack.getLifeTime()) {
                 tem_life_pack.add(life_pack);
             }
 
         }
 
-        lifePacks=tem_life_pack;
+        lifePacks = tem_life_pack;
 
     }
 

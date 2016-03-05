@@ -80,7 +80,7 @@ public class SetUp extends BasicGame {
                         bullet.update(i);
                     } else {
                         b.remove();
-                    //    bpacklocal.remove(bullet);
+                        //    bpacklocal.remove(bullet);
                     }
                 }
             }
@@ -102,75 +102,75 @@ public class SetUp extends BasicGame {
             //add bricks
             if (map != null) {
                 //game over
-                if(map.is_game_finished()){
-                    game_over_img.draw(0,0,600,450);
-                }
+                if (map.is_game_finished()) {
+                    game_over_img.draw(0, 0, 600, 450);
+                } else {
 
-                //player num
-                graphics.drawString("Your Player ID :" + map.getClientID(), 700, 300);
+                    //player num
+                    graphics.drawString("Your Player ID :" + map.getClientID(), 700, 300);
 
-                ArrayList<Brick> bricks = map.getBricks();
-                for (Brick brick : bricks) {
-                    if (brick.getHealth() == 100) {
-                        drawEntity(brick, brick_img);
-                    } else if (brick.getHealth() == 75) {
-                        drawEntity(brick, brick_75_img);
-                    } else if (brick.getHealth() == 50) {
-                        drawEntity(brick, brick_50_img);
-                    } else if (brick.getHealth() == 25) {
-                        drawEntity(brick, brick_25_img);
-                    }
-                }
-                //add water
-                ArrayList<Water> waters = map.getWaters();
-                for (Water water : waters) {
-                    drawEntity(water, water_img);
-                }
-                //add stone walls
-                ArrayList<Stone> stones = map.getStones();
-                for (Stone stone : stones) {
-                    drawEntity(stone, stone_img);
-                }
-
-                ArrayList<Tank> tanks = map.getTanks();
-                for (Tank tank : tanks) {
-                    if (tank.getHealth() > 0) { //otherwise it must not show the image of the tank, tank is dead
-                        if (tank.getDirection() == 1) {
-                            drawEntity(tank, tank_1_img);
-                        } else if (tank.getDirection() == 2) {
-                            drawEntity(tank, tank_2_img);
-                        } else if (tank.getDirection() == 3) {
-                            drawEntity(tank, tank_3_img);
-                        } else {
-                            drawEntity(tank, tank_0_img);
+                    ArrayList<Brick> bricks = map.getBricks();
+                    for (Brick brick : bricks) {
+                        if (brick.getHealth() == 100) {
+                            drawEntity(brick, brick_img);
+                        } else if (brick.getHealth() == 75) {
+                            drawEntity(brick, brick_75_img);
+                        } else if (brick.getHealth() == 50) {
+                            drawEntity(brick, brick_50_img);
+                        } else if (brick.getHealth() == 25) {
+                            drawEntity(brick, brick_25_img);
                         }
-                        //if tank is shooting
-                        if (tank.isShot()) {
-                            if (tank.getDirection() == 0 || tank.getDirection() == 2) {
-                                bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_ver_img));
+                    }
+                    //add water
+                    ArrayList<Water> waters = map.getWaters();
+                    for (Water water : waters) {
+                        drawEntity(water, water_img);
+                    }
+                    //add stone walls
+                    ArrayList<Stone> stones = map.getStones();
+                    for (Stone stone : stones) {
+                        drawEntity(stone, stone_img);
+                    }
+
+                    ArrayList<Tank> tanks = map.getTanks();
+                    for (Tank tank : tanks) {
+                        if (tank.getHealth() > 0) { //otherwise it must not show the image of the tank, tank is dead
+                            if (tank.getDirection() == 1) {
+                                drawEntity(tank, tank_1_img);
+                            } else if (tank.getDirection() == 2) {
+                                drawEntity(tank, tank_2_img);
+                            } else if (tank.getDirection() == 3) {
+                                drawEntity(tank, tank_3_img);
                             } else {
-                                bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_hor_img));
+                                drawEntity(tank, tank_0_img);
+                            }
+                            //if tank is shooting
+                            if (tank.isShot()) {
+                                if (tank.getDirection() == 0 || tank.getDirection() == 2) {
+                                    bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_ver_img));
+                                } else {
+                                    bulletpack.add(new Bullet(new Vector2f(tank.getX(), tank.getY()), tank.getDirection(), bullet_hor_img));
+                                }
                             }
                         }
+                        addDataToTable(tank);
                     }
-                    addDataToTable(tank);
-                }
 
-                ArrayList<Coin_Pile> coin_piles = map.getCoinPiles();
-                for (Coin_Pile coin_pile : coin_piles) {
-                    drawEntity(coin_pile, coin_img);
-                }
+                    ArrayList<Coin_Pile> coin_piles = map.getCoinPiles();
+                    for (Coin_Pile coin_pile : coin_piles) {
+                        drawEntity(coin_pile, coin_img);
+                    }
 
-                ArrayList<Life_Pack> life_packs = map.getLifePacks();
-                for (Life_Pack life_pack : life_packs) {
-                    drawEntity(life_pack, lifepack_img);
-                }
+                    ArrayList<Life_Pack> life_packs = map.getLifePacks();
+                    for (Life_Pack life_pack : life_packs) {
+                        drawEntity(life_pack, lifepack_img);
+                    }
 
-                //to move the already available bullets
-                for (Bullet bullet : bulletpack) {
-                    if(bullet.is_active())
-                        graphics.drawImage(bullet.getBullet_img(),4+60* bullet.getPos().getX(), 4+60*bullet.getPos().getY());
-                }
+                    //to move the already available bullets
+                    for (Bullet bullet : bulletpack) {
+                        if (bullet.is_active())
+                            graphics.drawImage(bullet.getBullet_img(), 4 + 60 * bullet.getPos().getX(), 4 + 60 * bullet.getPos().getY());
+                    }
 
 /*
                 //to remove bullets which hit stones ,bricks and tanks
@@ -193,6 +193,7 @@ public class SetUp extends BasicGame {
                         }
                     }
                 }*/
+                }
             }
         } catch (ConcurrentModificationException e) {
 
@@ -232,8 +233,8 @@ public class SetUp extends BasicGame {
             graphics.drawString(String.valueOf(healthEntity.getHealth()) + "%", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
         }
 
-        if( entity.getEnType()==Entity_Type.CoinPile){
-            Coin_Pile coin_pile=(Coin_Pile)entity;
+        if (entity.getEnType() == Entity_Type.CoinPile) {
+            Coin_Pile coin_pile = (Coin_Pile) entity;
             graphics.drawString(String.valueOf(coin_pile.getValue()) + "$", 4 + 60 * (entity.getX()), 8 + 60 * (entity.getY()));
         }
     }
@@ -248,7 +249,7 @@ public class SetUp extends BasicGame {
 
     private void addDataToTable(Tank tank) {
         int row = 405 + tank.getId() * 35;
-        String[] valueArray = new String[]{ String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
+        String[] valueArray = new String[]{String.valueOf(tank.getPoints()), String.valueOf(tank.getCoins()), String.valueOf(tank.getHealth())};
         int column = 720;
         for (String cellValue : valueArray) {
             graphics.drawString(cellValue, column, row);

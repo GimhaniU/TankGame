@@ -11,7 +11,7 @@ public class Tank extends Health_Entity {
     int direction;
 
 
-    public Tank(boolean shot, int coins, int points, int direction,int id,int x,int y) {
+    public Tank(boolean shot, int coins, int points, int direction, int id, int x, int y) {
         this.shot = shot;
         this.coins = coins;
         this.points = points;

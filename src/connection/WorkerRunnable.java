@@ -42,26 +42,26 @@ public class WorkerRunnable implements Runnable {
 
     ///////////////////////////////////////////////////////
 
-    public void sendMessage(String message){
-     //   Socket client=null;
-        DataOutputStream out=null;
+    public void sendMessage(String message) {
+        //   Socket client=null;
+        DataOutputStream out = null;
         try {
-          //  client = new Socket("127.0.0.1", 6000);
+            //  client = new Socket("127.0.0.1", 6000);
             out = new DataOutputStream(clientSocket.getOutputStream());
             out.writeBytes(message);
 
         } catch (UnknownHostException ex) {
-            System.out.println("Severe: \n "+Connection.class.getName()+"\n"+ex+"\n");
+            System.out.println("Severe: \n " + Connection.class.getName() + "\n" + ex + "\n");
             ex.printStackTrace();
         } catch (IOException ex) {
 
-            System.out.println("Severe: \n "+Connection.class.getName()+"\n"+ex);
+            System.out.println("Severe: \n " + Connection.class.getName() + "\n" + ex);
             ex.printStackTrace();
-        } catch(Exception e){
-            System.out.println("Runtime Exceptions:"+e);
-        }finally{
+        } catch (Exception e) {
+            System.out.println("Runtime Exceptions:" + e);
+        } finally {
             try {
-              //  client.close();
+                //  client.close();
                 out.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -71,27 +71,28 @@ public class WorkerRunnable implements Runnable {
 
 
     }
+
     //The Socket will be left unclosed on some exceptions.So moved close blocks to finally block.
-    public String getUpdates(){//this method blocks untill msg receives.Use time outs.
+    public String getUpdates() {//this method blocks untill msg receives.Use time outs.
         String update;
-        ServerSocket serverReader=null ;
-        Socket clientReader=null;
-        InputStreamReader socketReader=null;
+        ServerSocket serverReader = null;
+        Socket clientReader = null;
+        InputStreamReader socketReader = null;
         try {
             serverReader = new ServerSocket(7000);
             clientReader = serverReader.accept();
             socketReader = new InputStreamReader(clientReader.getInputStream());
             BufferedReader input = new BufferedReader(socketReader);
-            update= input.readLine();
+            update = input.readLine();
             return update;
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             return "Error while Rading from the socket";
-        }finally{
+        } finally {
             try {
-                if(serverReader!=null)serverReader.close();
-                if(clientReader!=null)clientReader.close();
-                if(socketReader!=null)socketReader.close();
+                if (serverReader != null) serverReader.close();
+                if (clientReader != null) clientReader.close();
+                if (socketReader != null) socketReader.close();
             } catch (IOException ex) {
                 System.err.println("Could not close network socket");
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,27 +102,27 @@ public class WorkerRunnable implements Runnable {
 
     }
 
-    public String getUpdates(int timeout){//this method blocks untill msg received or timeout
+    public String getUpdates(int timeout) {//this method blocks untill msg received or timeout
         String update;
-        ServerSocket serverReader=null ;
-        Socket clientReader=null;
-        InputStreamReader socketReader=null;
+        ServerSocket serverReader = null;
+        Socket clientReader = null;
+        InputStreamReader socketReader = null;
         try {
             serverReader = new ServerSocket(7000);
             serverReader.setSoTimeout(timeout);
             clientReader = serverReader.accept();
             socketReader = new InputStreamReader(clientReader.getInputStream());
             BufferedReader input = new BufferedReader(socketReader);
-            update= input.readLine();
+            update = input.readLine();
             return update;
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             return "Error while Rading from the socket";
-        }finally{
+        } finally {
             try {
-                if(serverReader!=null)serverReader.close();
-                if(clientReader!=null)clientReader.close();
-                if(socketReader!=null)socketReader.close();
+                if (serverReader != null) serverReader.close();
+                if (clientReader != null) clientReader.close();
+                if (socketReader != null) socketReader.close();
             } catch (IOException ex) {
                 System.err.println("Could not close network socket");
                 Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
