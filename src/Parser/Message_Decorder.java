@@ -293,7 +293,25 @@ public class Message_Decorder {
             tank.setShot(is_shot);
             tanks.add(tank);
 
+            //add a coinpiles when player dead
 
+            if(is_shot && health==4){
+
+                Coin_Pile coinPile = new Coin_Pile();
+
+                coinPile.setX(x);//get x coordinates of points
+                coinPile.setY(y);//get y coordinates of points
+
+
+                coinPile.setLifeTime(Integer.MAX_VALUE);
+                coinPile.setValue(coins);
+                coinPile.setStartTime(System.currentTimeMillis());
+
+                ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
+                coinPiles.add(coinPile);
+                map.setCoinPiles(coinPiles);
+
+            }
 
 
 
