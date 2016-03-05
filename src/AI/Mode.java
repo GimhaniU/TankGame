@@ -53,9 +53,7 @@ public class Mode {
                         }else{
                             return 4;
                         }
-
-                       ////if enemy situated same y axis with me and up to me
-
+                        ////if enemy situated same y axis with me and up to me
                     } else if(yMy<y && x==xMy){
                         for(int i=yMy+1;i<y;i++){
                             if(memory[xMy][i]!=0){
@@ -70,7 +68,6 @@ public class Mode {
                         }
 
                         //if enemy situated same y axis with me and down to me
-
                     }else if(yMy>y && x==xMy){
                         for(int i=y+1;i<yMy;i++){
                             if(memory[xMy][i]!=0){
