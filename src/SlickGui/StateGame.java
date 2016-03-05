@@ -10,14 +10,15 @@ import org.newdawn.slick.state.StateBasedGame;
  * Created by Nuwantha on 12/16/2015.
  */
 public class StateGame extends StateBasedGame {
-    GameContainer gamecontainer=null;
+    GameContainer gamecontainer = null;
+
     public StateGame(String name) {
         super(name);
     }
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
-        this.gamecontainer=gameContainer;
+        this.gamecontainer = gameContainer;
         this.addState(new SetUpGame());
     }
 

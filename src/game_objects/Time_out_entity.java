@@ -3,7 +3,7 @@ package game_objects;
 /**
  * Created by Gimhani on 10/21/2015.
  */
-public class Time_Out_Entity  extends Entity{
+public class Time_Out_Entity extends Entity {
     int lifeTime;
     long startTime;
 

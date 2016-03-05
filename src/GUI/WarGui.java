@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Nuwantha
  */
 public class WarGui extends JFrame {
-    Map map=null;
+    Map map = null;
     public WarGui() {
         initComponents();
 

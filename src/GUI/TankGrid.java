@@ -87,10 +87,10 @@ public class TankGrid extends JFrame{
             childLabel.setIcon(new ImageIcon("src/images/water.jpg"));//water
         }else if(entity.getEnType()== Entity_Type.Stone) {
             childLabel.setIcon(new ImageIcon("src/images/stone.jpg"));//stone
-        }else if(entity.getEnType()== Entity_Type.Brick) {
+        } else if (entity.getEnType() == Entity_Type.Brick) {
             childLabel.setIcon(new ImageIcon("src/images/brick.jpg")); //brick
-            childLabel.setText(((Brick)entity).getHealth()+"%");
-        }else if(entity.getEnType()== Entity_Type.CoinPile) {
+            childLabel.setText(((Brick) entity).getHealth() + "%");
+        } else if (entity.getEnType() == Entity_Type.CoinPile) {
             childLabel.setIcon(new ImageIcon("src/images/coinpile.png"));
         }else if(entity.getEnType()== Entity_Type.Lifepack){
             childLabel.setIcon(new ImageIcon("src/images/lifepack.png"));

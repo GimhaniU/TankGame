@@ -10,12 +10,12 @@ import org.newdawn.slick.geom.Vector2f;
  * Created by Gimhani on 10/21/2015.
  */
 public class Bullet extends Entity {
-    private int id=0;
+    private int id = 0;
 
     private Vector2f pos;
-    private Vector2f speed=null;
-    private boolean is_active=true;
-    private  int direction;
+    private Vector2f speed = null;
+    private boolean is_active = true;
+    private int direction;
     private Image bullet_img;
 
     public Image getBullet_img() {
@@ -38,8 +38,9 @@ public class Bullet extends Entity {
         setEnType(Entity_Type.Bullet);
 
     }
+
     public Bullet(int id) {
-        this.id=id;
+        this.id = id;
         setEnType(Entity_Type.Bullet);
     }
 
@@ -48,31 +49,35 @@ public class Bullet extends Entity {
 
     }
 
-    public Bullet(Vector2f init_pos,int direction,Image img) {
+    public Bullet(Vector2f init_pos, int direction, Image img) {
         this.pos = init_pos;
-        this.direction=direction;
-        this.bullet_img=img;
-        this.speed=getSpeed(direction);
+        this.direction = direction;
+        this.bullet_img = img;
+        this.speed = getSpeed(direction);
     }
 
-    private Vector2f getSpeed(int direction){
-        switch (direction){
-            case 0: return new Vector2f(0,-200);
-            case 1: return new Vector2f(200,0);
-            case 2:return new Vector2f(0,200);
-            case 3: return new Vector2f(-200,0);
+    private Vector2f getSpeed(int direction) {
+        switch (direction) {
+            case 0:
+                return new Vector2f(0, -200);
+            case 1:
+                return new Vector2f(200, 0);
+            case 2:
+                return new Vector2f(0, 200);
+            case 3:
+                return new Vector2f(-200, 0);
         }
-        return new Vector2f(0,200);
+        return new Vector2f(0, 200);
     }
 
     //to update the position
-    public  void update(int t){
-        if(is_active){
-            Vector2f real_speed=speed.copy();
+    public void update(int t) {
+        if (is_active) {
+            Vector2f real_speed = speed.copy();
             real_speed.scale(t / 3.0f);
             pos.add(real_speed);
-            if(pos.getX()<0 || pos.getX()>972 || pos.getY()<0 || pos.getY()>648){
-                is_active=false;
+            if (pos.getX() < 0 || pos.getX() > 972 || pos.getY() < 0 || pos.getY() > 648) {
+                is_active = false;
 
             }
         }
