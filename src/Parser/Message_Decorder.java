@@ -325,9 +325,6 @@ public class Message_Decorder {
                 }
             }
 
-
-
-
             //removing coin piles or life pack when tank get that coin or life pack
             if(health !=0) {
                 ArrayList<Coin_Pile> coinPiles = map.getCoinPiles();
