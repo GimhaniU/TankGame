@@ -64,7 +64,7 @@ public class SetUp extends BasicGame {
         stone_img = new Image("src/images/stone.png");
         bullet_hor_img = new Image("src/images/bullet-hor.png");
         bullet_ver_img = new Image("src/images/bullet-ver.png");
-        game_over_img = new Image("src/images/stone.png");
+        game_over_img = new Image("src/images/game_over.png");
 
         bulletpack = new ArrayList<>();
     }
@@ -85,9 +85,7 @@ public class SetUp extends BasicGame {
                 }
             }
         }
-        if(map.is_game_finished()){
-            game_over_img.draw(200,200);
-        }
+
     }
 
     public void update(Map map) throws SlickException {
@@ -103,6 +101,11 @@ public class SetUp extends BasicGame {
 
             //add bricks
             if (map != null) {
+                //game over
+                if(map.is_game_finished()){
+                    game_over_img.draw(0,0,600,450);
+                }
+
                 //player num
                 graphics.drawString("Your Player ID :" + map.getClientID(), 700, 300);
 

@@ -17,24 +17,42 @@ import java.util.logging.Logger;
  */
 public class Connection {
     static Connection connection;
+    Socket client=null;
 
     //using Singleton to create the connection
     public static Connection getInstance(){
         if(connection ==null){
             connection = new Connection();
+            try {
+                connection.client = new Socket("127.0.0.1", 6000);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return connection;
         }else{
+            connection.createsocket();
             return connection;
         }
 
     }
+    public void createsocket(){
+        if(client.isClosed()){
+            try {
+                connection.client = new Socket("127.0.0.1", 6000);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     //to send messages to server
     public void sendMessage(String message){
-        Socket client=null;
+
         DataOutputStream out=null;
         try {
-            client = new Socket("127.0.0.1", 6000);
+
+            createsocket();
+           // client = new Socket("127.0.0.1", 6000);
             out = new DataOutputStream(client.getOutputStream());
             out.writeBytes(message);
 
