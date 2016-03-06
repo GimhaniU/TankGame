@@ -2,6 +2,7 @@ package Parser;
 
 import SlickGui.SetUp;
 import SlickGui.StateGame;
+import connection.Connection;
 import game_objects.*;
 
 import java.util.ArrayList;
@@ -94,6 +95,8 @@ public class Message_Decorder {
             return "Be slow";
         } else if (message.equals("GAME_HAS_FINISHED#")) {
             map.setIs_game_finished(true);
+            Connection con=Connection.getInstance();
+            con.closeSocket(map);
             return "Game over";
         } else if (message.equals("GAME_FINISHED#")) {
             return "Game over for you";

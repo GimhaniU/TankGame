@@ -102,12 +102,17 @@ public class SetUp extends BasicGame {
             //add bricks
             if (map != null) {
                 //game over
+                //player num
+                graphics.drawString("Your Player ID :" + map.getClientID(), 700, 300);
+                if(map.is_me_dead()){
+                    graphics.drawString(" :Dead" + map.getClientID(), 700, 320);
+                }
                 if (map.is_game_finished()) {
                     game_over_img.draw(0, 0, 600, 450);
+                    ArrayList<Tank> tanks = map.getTanks();
+                    tanks.forEach(this::addDataToTable);
                 } else {
 
-                    //player num
-                    graphics.drawString("Your Player ID :" + map.getClientID(), 700, 300);
 
                     ArrayList<Brick> bricks = map.getBricks();
                     for (Brick brick : bricks) {
@@ -203,11 +208,11 @@ public class SetUp extends BasicGame {
     private Color chooseTankColour(int id) {
         switch (id) {
             case 0:
-                return Color.magenta;
+                return Color.red;
             case 1:
                 return Color.cyan;
             case 2:
-                return Color.pink;
+                return Color.magenta;
             case 3:
                 return Color.yellow;
             case 4:

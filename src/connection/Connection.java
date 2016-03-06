@@ -1,5 +1,6 @@
 package connection;
 
+import Parser.Map;
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
@@ -35,7 +36,12 @@ public class Connection {
         }
 
     }
-
+    public  void closeSocket(Map map){
+        if(map.is_game_finished()) {
+            IOUtils.closeQuietly(client);
+            System.out.println("SOCKET CLOSED");
+        }
+    }
 
     //to send messages to server
     public void sendMessage(String message) {
@@ -58,7 +64,7 @@ public class Connection {
         } catch (Exception e) {
             System.out.println("Runtime Exceptions:" + e);
         } finally {
-            IOUtils.closeQuietly(client);
+           // IOUtils.closeQuietly(client);
             IOUtils.closeQuietly(out);
 
         }
